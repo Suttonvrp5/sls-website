@@ -1,0 +1,9 @@
+{
+  "name": "samui-luxury-stays",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Samui Luxury Stays — static site with a staff-editable villa listing CMS.",
+  "scripts": {
+    "build": "node build.js"
+  }
+}

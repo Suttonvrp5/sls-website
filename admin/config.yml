@@ -1,0 +1,90 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Netlify Identity + Git Gateway handles staff logins — no separate
+# database needed. Invite staff from Netlify's dashboard under
+# Site settings → Identity → Invite users.
+
+media_folder: "assets/img/villas"
+public_folder: "assets/img/villas"
+
+collections:
+  - name: "villas"
+    label: "Villas"
+    label_singular: "Villa"
+    folder: "content/villas"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    summary: "{{name}} — {{area}}"
+    format: "json"
+    fields:
+      - { label: "Villa Name", name: "name", widget: "string", hint: "e.g. Villa Saaya" }
+      - { label: "Area", name: "area", widget: "string", hint: "e.g. Bophut, Choeng Mon, Lipa Noi" }
+      - { label: "Style / Tag", name: "style", widget: "string", hint: "e.g. Hillside, Beachfront, Headland" }
+      - { label: "Bedrooms", name: "bedrooms", widget: "number", value_type: "int", min: 1, max: 20 }
+      - { label: "Standout Feature", name: "feature", widget: "string", hint: "e.g. Infinity Pool, Private Chef, Ocean View" }
+      - label: "Amenities"
+        name: "amenities"
+        widget: "select"
+        multiple: true
+        required: false
+        options:
+          - "Pool"
+          - "Sea View"
+          - "Mountain View"
+          - "Pets Allowed"
+          - "Beachfront"
+          - "Private Chef"
+          - "Air Conditioning"
+          - "WiFi"
+          - "Parking"
+          - "Garden"
+          - "Gym"
+          - "Jacuzzi"
+          - "Staffed"
+          - "Washing Machine"
+        hint: "Tick everything that applies — only the first 3 checked will show as tags on the villa card, so put the most important ones first. To add a new amenity option to this list, ask your developer to add one line to admin/config.yml."
+      - { label: "Photo", name: "image", widget: "image", hint: "Main cover photo — shown on the villa card and as the first slide." }
+      - { label: "Or paste an image URL instead", name: "image_url", widget: "string", required: false, hint: "Only used if no photo is uploaded above." }
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        required: false
+        hint: "More photos for the picture slider on the villa's own page — 10 to 12 is typical, but add as few or as many as you have. The cover photo above is always shown first."
+        field: { label: "Photo", name: "image", widget: "image" }
+      - label: "Floor Plans"
+        name: "floorplans"
+        widget: "list"
+        required: false
+        hint: "One entry per floor or plan image, e.g. 'Ground Floor', 'Upper Floor'."
+        fields:
+          - { label: "Label", name: "label", widget: "string", hint: "e.g. Ground Floor" }
+          - { label: "Floor Plan Image", name: "image", widget: "image" }
+      - { label: "Description", name: "description", widget: "text", required: false, hint: "A few sentences about the villa, shown on its own page." }
+      - label: "Location"
+        name: "location"
+        widget: "object"
+        required: false
+        hint: "Used to show this villa on the map. Right-click the spot on Google Maps and copy the two numbers it shows you."
+        fields:
+          - { label: "Latitude", name: "lat", widget: "number", value_type: "float", required: false, hint: "e.g. 9.5312" }
+          - { label: "Longitude", name: "lng", widget: "number", value_type: "float", required: false, hint: "e.g. 100.0645" }
+      - { label: "Show on Homepage (Featured)", name: "featured", widget: "boolean", default: false }
+      - label: "Listing Type"
+        name: "listing_type"
+        widget: "select"
+        multiple: true
+        default: ["Rental"]
+        options: ["Rental", "For Sale"]
+        hint: "Tick both if this villa is available to rent AND currently for sale."
+      - { label: "Sale Price", name: "sale_price", widget: "number", required: false, hint: "Only used if \"For Sale\" is ticked above. Enter numbers only, e.g. 1850000." }
+      - label: "Sale Currency"
+        name: "sale_currency"
+        widget: "select"
+        required: false
+        default: "USD"
+        options: ["USD", "THB", "EUR", "GBP"]
+      - { label: "Ownership Structure", name: "ownership_structure", widget: "string", required: false, hint: "e.g. Freehold, Leasehold (30+30+30 years), Thai Company Structure. Only needed for sale listings." }
+      - { label: "Display Order", name: "order", widget: "number", value_type: "int", default: 99, hint: "Lower numbers show first." }
