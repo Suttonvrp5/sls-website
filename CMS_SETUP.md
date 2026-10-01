@@ -97,3 +97,25 @@ Under **Domain management** in Netlify, you can point your own domain
   script is intentionally simple).
 - A villa missing a required field will still build — it just prints a
   warning in the deploy log rather than breaking the whole site.
+
+## Editing page text, photos and site settings (no file uploads needed)
+
+Beyond villas, `/admin` also has two more sections:
+
+- **Page Content** — one entry per page (Home, About, Services, Contact,
+  Relocation). Edit headlines, body text, team bios, service descriptions,
+  pricing packages and photos directly. Save, and Netlify republishes the
+  live site within about a minute — same as villas.
+- **Site Settings → Contact Info & Social Links** — one place to update the
+  phone number, email, Instagram/LinkedIn links, and the Formspree form ID
+  that both the Contact and Relocation enquiry forms submit to. Change it
+  here once and it updates everywhere those details appear.
+
+A few fields are locked (greyed out / not shown) on purpose — e.g. each
+service's internal link anchor — because other pages link directly to
+them and changing them would break those links. Everything else is safe
+to edit freely.
+
+**Not yet covered by this system:** the Journal articles, and the FAQ
+questions on the Contact and Relocation pages, still need a developer to
+edit (a zip upload, same as before). Ask if you'd like those added too.

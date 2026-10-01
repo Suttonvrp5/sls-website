@@ -1,0 +1,65 @@
+{
+  "name": "Villa Saaya",
+  "area": "Bophut",
+  "style": "Hillside",
+  "bedrooms": 6,
+  "feature": "Infinity Pool",
+  "amenities": [
+    "Pool",
+    "Sea View",
+    "Staffed"
+  ],
+  "image": "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?q=80&w=1400&auto=format&fit=crop",
+  "description": "Set into the hillside above Bophut, Villa Saaya opens onto a 25-metre infinity pool with uninterrupted views across the Gulf of Thailand. A full-time staff team keeps the home guest-ready year-round.",
+  "location": {
+    "lat": 9.5389,
+    "lng": 100.0328
+  },
+  "featured": true,
+  "order": 1,
+  "gallery": [
+    {
+      "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1400&auto=format&fit=crop"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400&auto=format&fit=crop"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1600607687644-c7171b42498b?q=80&w=1400&auto=format&fit=crop"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1400&auto=format&fit=crop"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?q=80&w=1400&auto=format&fit=crop"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1400&auto=format&fit=crop"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1400&auto=format&fit=crop"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1400&auto=format&fit=crop"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1615874959474-d609969a20ed?q=80&w=1400&auto=format&fit=crop"
+    }
+  ],
+  "floorplans": [
+    {
+      "label": "Ground Floor",
+      "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop"
+    },
+    {
+      "label": "Upper Floor",
+      "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop"
+    }
+  ],
+  "listing_type": [
+    "Rental"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "Villa Aria",
+  "area": "Choeng Mon",
+  "style": "Beachfront",
+  "bedrooms": 4,
+  "feature": "Direct Beach",
+  "amenities": [
+    "Beachfront",
+    "Pool",
+    "Air Conditioning"
+  ],
+  "image": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1400&auto=format&fit=crop",
+  "description": "Villa Aria sits directly on the sand at Choeng Mon, one of Samui's calmest and most family-friendly beaches, with a private pool just steps from the water.",
+  "location": {
+    "lat": 9.558,
+    "lng": 100.0644
+  },
+  "featured": true,
+  "order": 2,
+  "gallery": [
+    {
+      "image": "https://images.unsplash.com/photo-1615529182904-14819c35db37?q=80&w=1400&auto=format&fit=crop"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=1400&auto=format&fit=crop"
+    }
+  ],
+  "listing_type": [
+    "Rental"
+  ]
+}

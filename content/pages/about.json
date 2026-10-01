@@ -1,0 +1,42 @@
+{
+  "hero_sub": "Deliberately small, genuinely local, and personally invested in every home we hold.",
+  "team_lead": "A resident team you'll actually know by name — on the island, on call, and personally invested in your villa.",
+  "team": [
+    {
+      "photo": "assets/img/team/prakit-niyakit.jpg",
+      "name": "Prakit \"Tam\" Niyakit",
+      "title": "Founder & Managing Director of Sales · Senior Property Manager",
+      "bio": "Born and raised in Koh Samui, Tam brings something that simply can't be learned from a distance — a lifetime of local knowledge, trusted relationships and a genuine understanding of the island.\nWith a background spanning construction, management and customer relations, he combines hands-on property experience with an instinctive understanding of people and the importance of exceptional service.\nOver the years, Tam has built a strong reputation on Samui for being approachable, dependable and well connected. He knows the island, its communities and its people inside and out.\nAt Samui Luxury Stays, that local knowledge and trusted network are invaluable. Because when it comes to looking after someone's property, experience matters — but knowing who you can trust matters even more."
+    },
+    {
+      "photo": "assets/img/team/sasan-fazli.jpg",
+      "name": "Sasan \"Moodeng\" Fazli",
+      "title": "Partner & Senior Property Manager · Marketing Manager",
+      "bio": "Nearly two decades in real estate has taught me that experience matters — but trust matters even more.\nI built my career in Vancouver, Canada working closely with property owners, investors and clients, where reputation, relationships and doing what you say you'll do are everything.\nToday, I'm bringing that experience to Koh Samui as a Partner and Senior Property Manager of Samui Luxury Stays. It's a new chapter, but the principles remain the same: integrity, discretion, personal service and relationships built for the long term.\nFor me, trust isn't a tagline — it's something earned over time."
+    },
+    {
+      "photo": "assets/img/team/pornchita-hindong.jpg",
+      "name": "Pornchita \"Lookmoo\" Hindong",
+      "title": "Guest Services · Compliance & Conveyancing",
+      "bio": "Originally from Korat, Thailand, Lookmoo has called Koh Samui home for more than 12 years and brings a rare combination of professionalism, attention to detail and genuine care to everything she does.\nWith valuable experience in accounting, compliance and conveyancing, she is highly organized and meticulous, with a natural ability to manage the important details that often happen behind the scenes.\nAt Samui Luxury Stays, Lookmoo oversees Guest Services, Compliance and Conveyancing, ensuring both our guests and property owners are looked after with care, efficiency and attention.\nFamily is incredibly important to Lookmoo, and that same caring nature carries into her work. She takes pride in looking after people, anticipating their needs and making sure nothing is overlooked.\nFor Lookmoo, exceptional service is in the details — and caring enough to get them right."
+    }
+  ],
+  "story_image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1400&auto=format&fit=crop",
+  "story_badge_number": "12+",
+  "story_badge_label": "Years on the Island",
+  "story_paragraph_1": "Samui Luxury Stays began with a frustration our founders knew first-hand: that managing a beautiful home from thousands of miles away too often meant patchy communication, surprise costs, and care that fell short of the property itself.",
+  "story_paragraph_2": "We set out to be the company we wished existed — resident on Koh Samui, small enough to stay personal, and disciplined enough to meet the standards of a five-star resort. Today we look after a select portfolio of distinguished villas for owners across Europe, Asia and beyond.",
+  "story_paragraph_3": "We deliberately limit how many homes we take on. It's the only way to guarantee that every owner gets a manager who truly knows their property — and answers the phone themselves.",
+  "values": [
+    { "title": "Discretion", "text": "Your privacy, your guests and your asset are handled with absolute confidentiality — always." },
+    { "title": "Transparency", "text": "Clear reporting and honest pricing. You always know what's happening and what it costs." },
+    { "title": "Accountability", "text": "One team owns the outcome. We don't pass the blame, and we don't disappear." }
+  ],
+  "stats": [
+    { "prefix": "$", "number": "180", "suffix": "M+", "label": "Property Value Managed" },
+    { "prefix": "", "number": "40", "suffix": "+", "label": "Villas in Our Care" },
+    { "prefix": "", "number": "98", "suffix": "%", "label": "Owner Retention" },
+    { "prefix": "", "number": "24", "suffix": "/7", "label": "On-Island Response" }
+  ],
+  "cta_text": "Arrange a confidential, no-obligation conversation with our founder."
+}

@@ -44,7 +44,7 @@
   /* Testimonials rotator */
   var quoteEl=document.getElementById('quote');
   if(quoteEl){
-    var data=[
+    var data=(window.SLS_TESTIMONIALS&&window.SLS_TESTIMONIALS.length)?window.SLS_TESTIMONIALS:[
       {q:'They manage our villa with a level of care we never expected from a distance. Reporting is impeccable, and guests leave <em>five-star reviews every time.</em>',a:'Charles &amp; Vivienne L.',r:'Villa owners · London, United Kingdom'},
       {q:'Truly the first management company that has felt like a genuine partner. Discreet, proactive, and <em>completely transparent</em> with every baht.',a:'Mr. A. Karlsson',r:'Villa owner · Stockholm, Sweden'},
       {q:'Our rental income is up and our worries are gone. They anticipate problems we never even <em>knew existed.</em>',a:'The Tan Family',r:'Villa owners · Singapore'}
@@ -55,16 +55,20 @@
       b.setAttribute('aria-label','Testimonial '+(i+1));
       b.addEventListener('click',function(){show(i,true);});dots.appendChild(b);
     });
+    function render(i){
+      quoteEl.innerHTML=data[i].q;aEl.innerHTML='<b>'+data[i].a+'</b><span>'+data[i].r+'</span>';
+      Array.prototype.forEach.call(dots.children,function(d,j){d.classList.toggle('on',j===i);});
+    }
     function show(i,manual){
       qi=i;quoteEl.style.opacity=0;aEl.style.opacity=0;
       setTimeout(function(){
-        quoteEl.innerHTML=data[i].q;aEl.innerHTML='<b>'+data[i].a+'</b><span>'+data[i].r+'</span>';
+        render(i);
         quoteEl.style.opacity=1;aEl.style.opacity=1;
-        Array.prototype.forEach.call(dots.children,function(d,j){d.classList.toggle('on',j===i);});
       },350);
       if(manual){clearInterval(timer);timer=setInterval(next,7000);}
     }
     function next(){show((qi+1)%data.length);}
+    render(0);
     timer=setInterval(next,7000);
   }
 

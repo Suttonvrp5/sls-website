@@ -32,7 +32,7 @@
 <link rel="stylesheet" href="assets/css/styles.css" />
 <link rel="stylesheet" href="assets/css/home.css" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","@id":"https://www.samuiluxurystays.com/#business","name":"Samui Luxury Stays","description":"Luxury villa and property management in Koh Samui, Thailand.","url":"https://www.samuiluxurystays.com/","telephone":"+66770000000","email":"owners@samuiluxurystays.com","image":"https://www.samuiluxurystays.com/assets/img/og-cover.jpg","priceRange":"$$$$","areaServed":{"@type":"Place","name":"Koh Samui, Thailand"},"address":{"@type":"PostalAddress","streetAddress":"Bophut","addressLocality":"Koh Samui","addressRegion":"Surat Thani","postalCode":"84320","addressCountry":"TH"},"geo":{"@type":"GeoCoordinates","latitude":9.512,"longitude":100.013},"openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"},"knowsAbout":["Villa Management","Holiday Rentals","Concierge","Housekeeping","Maintenance","Pool & Garden","Owner Reporting","Security"],"makesOffer":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Property Management"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Holiday Rental Management"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Concierge"}}]}
+{"@context":"https://schema.org","@type":"LocalBusiness","@id":"https://www.samuiluxurystays.com/#business","name":"Samui Luxury Stays","description":"Luxury villa and property management in Koh Samui, Thailand.","url":"https://www.samuiluxurystays.com/","telephone":"{{CMS:phone_href}}","email":"{{CMS:email}}","image":"https://www.samuiluxurystays.com/assets/img/og-cover.jpg","priceRange":"$$$$","areaServed":{"@type":"Place","name":"Koh Samui, Thailand"},"address":{"@type":"PostalAddress","streetAddress":"Bophut","addressLocality":"Koh Samui","addressRegion":"Surat Thani","postalCode":"84320","addressCountry":"TH"},"geo":{"@type":"GeoCoordinates","latitude":9.512,"longitude":100.013},"openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"},"knowsAbout":["Villa Management","Holiday Rentals","Concierge","Housekeeping","Maintenance","Pool & Garden","Owner Reporting","Security"],"makesOffer":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Property Management"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Holiday Rental Management"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Concierge"}}]}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","url":"https://www.samuiluxurystays.com/","name":"Samui Luxury Stays","publisher":{"@id":"https://www.samuiluxurystays.com/#business"}}
@@ -64,13 +64,13 @@
       <source src="assets/video/koh-samui-hero.mp4" type="video/mp4" />
     </video>
     <div class="hero-fallback" id="heroFallback" aria-hidden="true">
-      <img src="assets/img/hero.jpg" alt="" class="hero-photo" />
+      <img src="{{CMS:hero_image}}" alt="" class="hero-photo" />
     </div>
   </div>
   <div class="hero-overlay"></div>
   <div class="wrap hero-content">
     <h1><span class="ln"><i>Luxury Property</i></span><span class="ln"><i>Management &amp; Sales</i></span><span class="ln"><i><em>for Exceptional Homes</em></i></span></h1>
-    <p class="sub">Protecting your investment while delivering five-star experiences for owners and guests across Koh Samui.</p>
+    <p class="sub"><!--CMS:hero_sub-->Protecting your investment while delivering five-star experiences for owners and guests across Koh Samui.<!--/CMS:hero_sub--></p>
     <div class="hero-ctas">
       <a href="contact.html" class="btn btn-gold">Request a Consultation <span class="arr">→</span></a>
       <a href="services.html" class="btn btn-ghost">Explore Our Services</a>
@@ -83,7 +83,7 @@
 <section class="pad">
   <div class="wrap">
     <div class="brand-banner-wrap reveal">
-      <img src="assets/img/brand-banner.jpg" alt="Samui Luxury Stays — Island Living, Redefined" />
+      <img src="{{CMS:brand_banner_image}}" alt="Samui Luxury Stays — Island Living, Redefined" />
     </div>
   </div>
 </section>
@@ -91,12 +91,10 @@
 <!-- WHY -->
 <section class="why pad" id="why">
   <div class="wrap">
-    <div class="head-row reveal"><span class="eyebrow">Why Samui Luxury Stays</span><h2>A standard of care your home <em>deserves.</em></h2><p class="lead">We treat every villa as if it were our own — combining local expertise with the discretion and precision of true luxury hospitality.</p></div>
+    <div class="head-row reveal"><span class="eyebrow">Why Samui Luxury Stays</span><h2>A standard of care your home <em>deserves.</em></h2><p class="lead"><!--CMS:why_lead-->We treat every villa as if it were our own — combining local expertise with the discretion and precision of true luxury hospitality.<!--/CMS:why_lead--></p></div>
     <div class="pillars">
-      <div class="pillar reveal" data-d="1"><div class="pn">01</div><h3>Trusted Local Experts</h3><p>A resident team on the island, on call, who know every villa, vendor, and microclimate of Koh Samui intimately.</p></div>
-      <div class="pillar reveal" data-d="2"><div class="pn">02</div><h3>Transparent Communication</h3><p>Clear reporting and honest updates. You always know exactly how your property is performing and being cared for.</p></div>
-      <div class="pillar reveal" data-d="3"><div class="pn">03</div><h3>Preventative Maintenance</h3><p>We anticipate issues before they become costly. Proactive care that protects value over the long term.</p></div>
-      <div class="pillar reveal" data-d="4"><div class="pn">04</div><h3>Luxury Hospitality Standards</h3><p>Five-star service for owners and guests alike — every detail considered, nothing left to chance.</p></div>
+<!-- PILLARS:START -->
+<!-- PILLARS:END -->
     </div>
   </div>
 </section>
@@ -104,16 +102,10 @@
 <!-- SERVICES -->
 <section class="pad" id="services">
   <div class="wrap">
-    <div class="head-row reveal"><span class="eyebrow">What We Do</span><h2>Complete care, <em>quietly delivered.</em></h2><p class="lead">A single, accountable team covering every aspect of villa ownership — so you can simply enjoy your home.</p></div>
+    <div class="head-row reveal"><span class="eyebrow">What We Do</span><h2>Complete care, <em>quietly delivered.</em></h2><p class="lead"><!--CMS:services_lead-->A single, accountable team covering every aspect of villa ownership — so you can simply enjoy your home.<!--/CMS:services_lead--></p></div>
     <div class="svc-grid">
-      <a class="svc link reveal" data-d="1" href="services.html#management"><div class="ico"><img src="assets/img/icons/property-management.png" alt="Property Management" /></div><div class="svc-bot"><h3>Property Management</h3><p>End-to-end oversight of your villa, vendors, staff, and budgets.</p></div></a>
-      <a class="svc link reveal" data-d="2" href="services.html#rentals"><div class="ico"><img src="assets/img/icons/villa-rentals.png" alt="Villa Rentals" /></div><div class="svc-bot"><h3>Villa Rentals</h3><p>Curated holiday rental management that maximises yield and protects the home.</p></div></a>
-      <a class="svc link reveal" data-d="3" href="services.html#concierge"><div class="ico"><img src="assets/img/icons/concierge.png" alt="Concierge" /></div><div class="svc-bot"><h3>Concierge</h3><p>Private chefs, transfers, excursions and bespoke experiences on demand.</p></div></a>
-      <a class="svc link reveal" data-d="4" href="services.html#housekeeping"><div class="ico"><img src="assets/img/icons/housekeeping.png" alt="Housekeeping" /></div><div class="svc-bot"><h3>Housekeeping</h3><p>Immaculate, hotel-grade cleaning and turnover by a trained resident team.</p></div></a>
-      <a class="svc link reveal" data-d="1" href="services.html#maintenance"><div class="ico"><img src="assets/img/icons/maintenance.png" alt="Maintenance" /></div><div class="svc-bot"><h3>Maintenance</h3><p>Skilled trades and preventative upkeep that keeps everything flawless.</p></div></a>
-      <a class="svc link reveal" data-d="2" href="services.html#poolgarden"><div class="ico"><img src="assets/img/icons/pool-garden.png" alt="Pool &amp; Garden" /></div><div class="svc-bot"><h3>Pool &amp; Garden</h3><p>Pristine water and lush landscaping, maintained on a precise schedule.</p></div></a>
-      <a class="svc link reveal" data-d="3" href="services.html#reporting"><div class="ico"><img src="assets/img/icons/owner-reporting.png" alt="Owner Reporting" /></div><div class="svc-bot"><h3>Owner Reporting</h3><p>Clear monthly financials and performance — full transparency, always.</p></div></a>
-      <a class="svc link reveal" data-d="4" href="services.html#security"><div class="ico"><img src="assets/img/icons/security-checks.png" alt="Security Checks" /></div><div class="svc-bot"><h3>Security Checks</h3><p>Regular inspections and monitoring for total peace of mind, year-round.</p></div></a>
+<!-- SERVICE_CARDS:START -->
+<!-- SERVICE_CARDS:END -->
     </div>
   </div>
 </section>
@@ -133,13 +125,13 @@
 <!-- ABOUT -->
 <section class="pad" id="about">
   <div class="wrap about">
-    <div class="about-media reveal" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1400&auto=format&fit=crop')"><div class="about-badge"><b>12+</b><span>Years on the Island</span></div></div>
+    <div class="about-media reveal" style="background-image:url('{{CMS:about_image}}')"><div class="about-badge"><b><!--CMS:about_badge_number-->12+<!--/CMS:about_badge_number--></b><span><!--CMS:about_badge_label-->Years on the Island<!--/CMS:about_badge_label--></span></div></div>
     <div class="reveal" data-d="1">
       <span class="eyebrow">About Us</span>
       <h2>Owners' peace of mind is <em>our profession.</em></h2>
-      <p>Samui Luxury Stays was founded on a simple belief: that owning a villa in paradise should feel effortless. From our base in Koh Samui, we manage a select portfolio of distinguished homes for owners across the world.</p>
-      <p>Our resident team blends genuine local knowledge with the discretion and precision expected by international clients. We are deliberately small — accountable, responsive, and personally invested in every home we hold.</p>
-      <div class="sig"><img src="assets/img/logo-icon.png" alt="" class="brand-logo" style="height:34px" /><div class="ln">A trusted partner, not a portal.<span>Personally managed, never outsourced.</span></div></div>
+      <p><!--CMS:about_paragraph_1-->Samui Luxury Stays was founded on a simple belief: that owning a villa in paradise should feel effortless. From our base in Koh Samui, we manage a select portfolio of distinguished homes for owners across the world.<!--/CMS:about_paragraph_1--></p>
+      <p><!--CMS:about_paragraph_2-->Our resident team blends genuine local knowledge with the discretion and precision expected by international clients. We are deliberately small — accountable, responsive, and personally invested in every home we hold.<!--/CMS:about_paragraph_2--></p>
+      <div class="sig"><img src="assets/img/logo-icon.png" alt="" class="brand-logo" style="height:34px" /><div class="ln"><!--CMS:about_sig_line1-->A trusted partner, not a portal.<!--/CMS:about_sig_line1--><span><!--CMS:about_sig_line2-->Personally managed, never outsourced.<!--/CMS:about_sig_line2--></span></div></div>
       <div style="margin-top:34px"><a href="about.html" class="btn btn-dark-ghost">Our Story <span class="arr">→</span></a></div>
     </div>
   </div>
@@ -148,10 +140,8 @@
 <!-- STATS -->
 <section class="stats">
   <div class="wrap stat-row">
-    <div class="stat reveal" data-d="1"><b>$<em>180</em>M+</b><span>Property Value Managed</span></div>
-    <div class="stat reveal" data-d="2"><b><em>40</em>+</b><span>Villas in Our Care</span></div>
-    <div class="stat reveal" data-d="3"><b><em>98</em>%</b><span>Owner Retention</span></div>
-    <div class="stat reveal" data-d="4"><b><em>24</em>/7</b><span>On-Island Response</span></div>
+<!-- STATS:START -->
+<!-- STATS:END -->
   </div>
 </section>
 
@@ -161,17 +151,19 @@
     <div class="head-row center reveal" style="margin-bottom:50px"><span class="eyebrow center">In Their Words</span></div>
     <div class="quote-wrap reveal" data-d="1">
       <div class="qmark">“</div>
-      <p class="quote" id="quote">They manage our villa with a level of care we never expected from a distance. Reporting is impeccable, and guests leave <em>five-star reviews every time.</em></p>
-      <div class="qauthor" id="qauthor"><b>Charles &amp; Vivienne L.</b><span>Villa owners · London, United Kingdom</span></div>
+      <p class="quote" id="quote"></p>
+      <div class="qauthor" id="qauthor"></div>
       <div class="qdots" id="qdots"></div>
     </div>
+<!-- TESTIMONIALS_DATA:START -->
+<!-- TESTIMONIALS_DATA:END -->
   </div>
 </section>
 
 <!-- CHOOSE -->
 <section class="choose pad">
   <div class="wrap choose-grid">
-    <div class="reveal"><span class="eyebrow">The Difference</span><h2>Why owners choose <em>Samui Luxury Stays.</em></h2><p class="lead">When your home is worth millions, the details are everything. This is how we earn — and keep — your trust.</p></div>
+    <div class="reveal"><span class="eyebrow">The Difference</span><h2>Why owners choose <em>Samui Luxury Stays.</em></h2><p class="lead"><!--CMS:choose_lead-->When your home is worth millions, the details are everything. This is how we earn — and keep — your trust.<!--/CMS:choose_lead--></p></div>
     <ul class="choose-list reveal" data-d="1">
       <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg></span><div><h4>One accountable team</h4><p>A single point of contact who owns the outcome — never a faceless call centre.</p></div></li>
       <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg></span><div><h4>Full financial transparency</h4><p>Detailed monthly statements with no hidden margins or surprise costs.</p></div></li>
@@ -183,7 +175,7 @@
 
 <!-- CTA -->
 <section class="cta-band">
-  <div class="wrap reveal"><span class="eyebrow center">Begin</span><h2>Let's talk about <em>your villa.</em></h2><p>Arrange a confidential consultation and discover how effortless ownership in Koh Samui can be.</p><a href="contact.html" class="btn btn-gold">Request a Consultation <span class="arr">→</span></a></div>
+  <div class="wrap reveal"><span class="eyebrow center">Begin</span><h2>Let's talk about <em>your villa.</em></h2><p><!--CMS:cta_text-->Arrange a confidential consultation and discover how effortless ownership in Koh Samui can be.<!--/CMS:cta_text--></p><a href="contact.html" class="btn btn-gold">Request a Consultation <span class="arr">→</span></a></div>
 </section>
 
 <footer>
@@ -197,8 +189,8 @@
     <div class="foot-bot">
       <p>© <span id="year">2026</span> Samui Luxury Stays. All rights reserved.</p>
       <div class="foot-social">
-        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
-        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 014 0v4"/></svg></a>
+        <a href="{{CMS:instagram_url}}" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="{{CMS:linkedin_url}}" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 014 0v4"/></svg></a>
         <a href="mailto:owners@samuiluxurystays.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
       </div>
     </div>

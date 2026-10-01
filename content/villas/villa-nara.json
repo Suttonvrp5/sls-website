@@ -1,0 +1,23 @@
+{
+  "name": "Villa Nara",
+  "area": "Maenam",
+  "style": "Beachfront",
+  "bedrooms": 3,
+  "feature": "Garden Pool",
+  "amenities": [
+    "Pool",
+    "Garden",
+    "Pets Allowed"
+  ],
+  "image": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1400&auto=format&fit=crop",
+  "description": "A relaxed, pet-friendly villa in Maenam surrounded by tropical gardens, with a private pool and easy walking access to the beach and local markets.",
+  "location": {
+    "lat": 9.5697,
+    "lng": 100.0203
+  },
+  "featured": false,
+  "order": 5,
+  "listing_type": [
+    "Rental"
+  ]
+}

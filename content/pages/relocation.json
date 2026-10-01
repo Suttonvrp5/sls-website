@@ -1,0 +1,35 @@
+{
+  "hero_sub": "Moving to the island but not here yet? Our team views, vets and shortlists rental properties on your behalf — so your first day on Koh Samui starts with keys, not a hotel room and a browser tab.",
+  "problem_lead": "Photos flatter. Listings go stale. Landlords disappear. Without someone on the ground, you're relying on strangers and guesswork for one of the biggest decisions of your move.",
+  "pricing": [
+    {
+      "tag": "",
+      "name": "Scout",
+      "price": "฿12,000",
+      "price_suffix": "one-off",
+      "description": "A curated shortlist, fully researched — ideal if you can view in person yourself once you land.",
+      "features": ["Up to 6 matched properties", "Photos, pricing & lease terms", "Area & neighbourhood notes", "Delivered within 5 working days"],
+      "button_label": "Choose Scout"
+    },
+    {
+      "tag": "Most Popular",
+      "name": "Shortlist",
+      "price": "฿28,000",
+      "price_suffix": "one-off",
+      "description": "We do the legwork so your shortlist is already vetted, filmed and ready to compare.",
+      "features": ["Everything in Scout", "In-person inspection of every property", "Walkthrough video for each home", "Landlord & agent background checks", "One follow-up round of searching"],
+      "button_label": "Choose Shortlist"
+    },
+    {
+      "tag": "",
+      "name": "Full Relocation",
+      "price": "฿55,000",
+      "price_suffix": "one-off",
+      "description": "End-to-end support from search to signed lease and move-in day.",
+      "features": ["Everything in Shortlist", "Lease negotiation on your behalf", "Contract & deposit review", "Airport pickup on arrival day", "Accompanied final viewings", "Utilities & move-in coordination"],
+      "button_label": "Choose Full Relocation"
+    }
+  ],
+  "pricing_note": "Fees cover our time and local expertise, not the properties themselves — you deal directly with landlords for rent and deposits. Prices shown in Thai Baht; happy to quote in your home currency on request.",
+  "request_lead": "Share your brief and preferred package below. We'll confirm the fee and get searching as soon as it's settled."
+}

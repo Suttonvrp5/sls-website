@@ -14,6 +14,8 @@ const path = require('path');
 
 const ROOT = __dirname;
 const CONTENT_DIR = path.join(ROOT, 'content', 'villas');
+const PAGES_DIR = path.join(ROOT, 'content', 'pages');
+const SETTINGS_FILE = path.join(ROOT, 'content', 'settings.json');
 const OUT_DIR = path.join(ROOT, '_site');
 
 // ---------- helpers ----------
@@ -45,6 +47,44 @@ function loadVillas() {
 
 function slugify(filename) {
   return filename.replace(/\.json$/i, '');
+}
+
+// Loads a JSON content file. Returns {} if missing, so a missing/not-yet-
+// created page file never crashes the build — it just leaves that page's
+// {{CMS:...}} tokens and markers untouched (falls back to whatever is
+// already baked into the HTML template).
+function loadJSON(filePath) {
+  if (!fs.existsSync(filePath)) return {};
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } catch (e) {
+    console.error(`⚠️  Skipping ${filePath} — invalid JSON: ${e.message}`);
+    return {};
+  }
+}
+
+// Replaces every {{CMS:key}} token in html with the (escaped) value of
+// data[key], for simple single-value fields — page text, phone numbers,
+// image URLs, form IDs. Used for both page-specific content and the
+// site-wide settings pass. Leaves unknown tokens alone rather than
+// erroring, so a field that hasn't been added to a page's JSON yet just
+// shows its original template text.
+function injectTokens(html, data) {
+  if (!data) return html;
+  return html.replace(/\{\{CMS:([a-zA-Z0-9_]+)\}\}/g, (match, key) => {
+    return Object.prototype.hasOwnProperty.call(data, key) ? esc(data[key]) : match;
+  });
+}
+
+// Replaces the content between <!--CMS:key--> and <!--/CMS:key--> markers
+// with the (escaped) value of data[key]. Used for text blocks that live
+// inside visible page content rather than inside an HTML attribute.
+function injectCommentFields(html, data) {
+  if (!data) return html;
+  return html.replace(/<!--CMS:([a-zA-Z0-9_]+)-->[\s\S]*?<!--\/CMS:\1-->/g, (match, key) => {
+    if (!Object.prototype.hasOwnProperty.call(data, key)) return match;
+    return `<!--CMS:${key}-->${esc(data[key])}<!--/CMS:${key}-->`;
+  });
 }
 
 const CURRENCY_SYMBOLS = { USD: '$', THB: '฿', EUR: '€', GBP: '£' };
@@ -123,7 +163,10 @@ const SITE_FOOTER = `<footer>
 function villaDetailPage(v, slug, allVillas) {
   const coverSrc = (v.image_url && v.image_url.trim()) ? v.image_url.trim() : (v.image || '');
   const galleryImgs = Array.isArray(v.gallery)
-    ? v.gallery.map(g => (g && g.image) ? g.image : null).filter(Boolean)
+    ? v.gallery.map(g => {
+        if (typeof g === 'string') return g.trim() || null; // older/alternate CMS format: plain string
+        return (g && typeof g.image === 'string') ? g.image.trim() || null : null;
+      }).filter(Boolean)
     : [];
   const allImages = [coverSrc, ...galleryImgs].filter(Boolean);
   const amenities = Array.isArray(v.amenities) ? v.amenities : [];
@@ -292,6 +335,102 @@ function injectBetweenMarkers(html, startMarker, endMarker, content) {
   return html.replace(pattern, `${startMarker}\n${content}\n${endMarker}`);
 }
 
+// ---------- page content renderers (Home / About / Services / Relocation) ----------
+// These turn the editable lists from content/pages/*.json back into the
+// exact same markup the page used to have hard-coded, so staff can add,
+// remove or re-word entries from /admin without ever touching a template.
+
+function renderPillars(items) {
+  if (!Array.isArray(items) || !items.length) return '';
+  return items.map((p, i) =>
+    `<div class="pillar reveal" data-d="${(i % 4) + 1}"><div class="pn">${String(i + 1).padStart(2, '0')}</div><h3>${esc(p.title)}</h3><p>${esc(p.text)}</p></div>`
+  ).join('\n      ');
+}
+
+const HOME_SERVICE_META = [
+  { anchor: 'management', icon: 'property-management' },
+  { anchor: 'rentals', icon: 'villa-rentals' },
+  { anchor: 'concierge', icon: 'concierge' },
+  { anchor: 'housekeeping', icon: 'housekeeping' },
+  { anchor: 'maintenance', icon: 'maintenance' },
+  { anchor: 'poolgarden', icon: 'pool-garden' },
+  { anchor: 'reporting', icon: 'owner-reporting' },
+  { anchor: 'security', icon: 'security-checks' }
+];
+function renderServiceCardsHome(items) {
+  if (!Array.isArray(items) || !items.length) return '';
+  return items.map((s, i) => {
+    const meta = HOME_SERVICE_META[i] || HOME_SERVICE_META[HOME_SERVICE_META.length - 1];
+    return `<a class="svc link reveal" data-d="${(i % 4) + 1}" href="services.html#${meta.anchor}"><div class="ico"><img src="assets/img/icons/${meta.icon}.png" alt="${esc(s.title)}" /></div><div class="svc-bot"><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></div></a>`;
+  }).join('\n      ');
+}
+
+function renderStats(items) {
+  if (!Array.isArray(items) || !items.length) return '';
+  return items.map((s, i) =>
+    `<div class="stat reveal" data-d="${(i % 4) + 1}"><b>${esc(s.prefix || '')}<em>${esc(s.number)}</em>${esc(s.suffix || '')}</b><span>${esc(s.label)}</span></div>`
+  ).join('\n    ');
+}
+
+function renderTestimonialsScript(items) {
+  if (!Array.isArray(items) || !items.length) return '';
+  const data = items.map(t => ({ q: t.quote, a: t.author, r: t.role }));
+  return `<script>window.SLS_TESTIMONIALS = ${JSON.stringify(data)};</script>`;
+}
+
+function renderTeam(items) {
+  if (!Array.isArray(items) || !items.length) return '';
+  return items.map((m, i) => {
+    const paras = String(m.bio || '').split(/\n+/).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('');
+    return `<div class="member reveal" data-d="${(i % 4) + 1}"><div class="mimg" style="background-image:url('${esc(m.photo)}')"></div><h4>${esc(m.name)}</h4><span>${esc(m.title)}</span>${paras}</div>`;
+  }).join('\n      ');
+}
+
+const VALUE_ICONS = [
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V5h16v14M8 19v-6h3v6m2 0v-9h3v9"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5"/></svg>'
+];
+function renderValues(items) {
+  if (!Array.isArray(items) || !items.length) return '';
+  return items.map((v, i) =>
+    `<div class="value reveal" data-d="${(i % 4) + 1}"><div class="vi">${VALUE_ICONS[i % VALUE_ICONS.length]}</div><h3>${esc(v.title)}</h3><p>${esc(v.text)}</p></div>`
+  ).join('\n      ');
+}
+
+function renderServiceRows(items) {
+  if (!Array.isArray(items) || !items.length) return '';
+  return items.map((s, i) => {
+    const flip = i % 2 === 1 ? ' flip' : '';
+    const bullets = Array.isArray(s.bullets) ? s.bullets.map(b => `<li>${esc(b)}</li>`).join('') : '';
+    return `    <div class="srow${flip} reveal" id="${esc(s.anchor)}">
+      <div class="srow-media" style="background-image:url('${esc(s.image)}')"></div>
+      <div><div class="sn">${esc(s.label)}</div><h3>${esc(s.heading)}</h3><p>${esc(s.paragraph)}</p><ul>${bullets}</ul></div>
+    </div>`;
+  }).join('\n\n');
+}
+
+function renderPricingTiers(items) {
+  if (!Array.isArray(items) || !items.length) return '';
+  return items.map((t, i) => {
+    const isFeat = t.tag && t.tag.trim();
+    const cls = isFeat ? 'ptier feat reveal' : 'ptier reveal';
+    const tagHtml = isFeat ? `<div class="ptier-tag">${esc(t.tag)}</div>` : '';
+    const features = Array.isArray(t.features) ? t.features.map(f => `<li>${esc(f)}</li>`).join('') : '';
+    const btn = isFeat
+      ? `<a href="#request" class="btn btn-gold">${esc(t.button_label || ('Choose ' + t.name))}</a>`
+      : `<a href="#request" class="btn btn-dark-ghost" style="border:1px solid var(--navy);color:var(--navy)">${esc(t.button_label || ('Choose ' + t.name))}</a>`;
+    return `      <div class="${cls}" data-d="${i + 1}">
+        ${tagHtml}
+        <div class="ptier-name">${esc(t.name)}</div>
+        <div class="price">${esc(t.price)}<span> ${esc(t.price_suffix || '')}</span></div>
+        <p class="ptier-desc">${esc(t.description)}</p>
+        <ul>${features}</ul>
+        ${btn}
+      </div>`;
+  }).join('\n\n');
+}
+
 function copyRecursive(src, dest, skip) {
   const entries = fs.readdirSync(src, { withFileTypes: true });
   fs.mkdirSync(dest, { recursive: true });
@@ -352,6 +491,11 @@ function build() {
   // 2. Copy admin + content along so Decap CMS can read/write them via the Git Gateway
   copyRecursive(path.join(ROOT, 'admin'), path.join(OUT_DIR, 'admin'));
   copyRecursive(CONTENT_DIR, path.join(OUT_DIR, 'content', 'villas'));
+  if (fs.existsSync(PAGES_DIR)) copyRecursive(PAGES_DIR, path.join(OUT_DIR, 'content', 'pages'));
+  if (fs.existsSync(SETTINGS_FILE)) {
+    fs.mkdirSync(path.join(OUT_DIR, 'content'), { recursive: true });
+    fs.copyFileSync(SETTINGS_FILE, path.join(OUT_DIR, 'content', 'settings.json'));
+  }
 
   // 3. Load villa data
   const villas = loadVillas();
@@ -390,6 +534,69 @@ function build() {
     html = injectBetweenMarkers(html, '<!-- FEATURED_VILLAS:START -->', '<!-- FEATURED_VILLAS:END -->', '      ' + cards);
     fs.writeFileSync(indexPath, html);
   }
+
+  // 7. Editable page content — Home / About / Services / Contact / Relocation.
+  // Each page's {{CMS:field}} tokens and <!--CMS:field--> text blocks are
+  // filled from content/pages/<page>.json, and the repeating sections
+  // (pillars, service cards, stats, testimonials, team, values, service
+  // rows, pricing tiers) are regenerated from their JSON arrays.
+  function applyPageContent(file, data, markerFillers) {
+    const filePath = path.join(OUT_DIR, file);
+    if (!fs.existsSync(filePath)) return;
+    let html = fs.readFileSync(filePath, 'utf8');
+    html = injectTokens(html, data);
+    html = injectCommentFields(html, data);
+    (markerFillers || []).forEach(({ start, end, render, key }) => {
+      html = injectBetweenMarkers(html, start, end, render(data[key]));
+    });
+    fs.writeFileSync(filePath, html);
+  }
+
+  const homeData = loadJSON(path.join(PAGES_DIR, 'home.json'));
+  applyPageContent('index.html', homeData, [
+    { start: '<!-- PILLARS:START -->', end: '<!-- PILLARS:END -->', key: 'pillars', render: renderPillars },
+    { start: '<!-- SERVICE_CARDS:START -->', end: '<!-- SERVICE_CARDS:END -->', key: 'service_cards', render: renderServiceCardsHome },
+    { start: '<!-- STATS:START -->', end: '<!-- STATS:END -->', key: 'stats', render: renderStats },
+    { start: '<!-- TESTIMONIALS_DATA:START -->', end: '<!-- TESTIMONIALS_DATA:END -->', key: 'testimonials', render: renderTestimonialsScript }
+  ]);
+
+  const aboutData = loadJSON(path.join(PAGES_DIR, 'about.json'));
+  applyPageContent('about.html', aboutData, [
+    { start: '<!-- TEAM:START -->', end: '<!-- TEAM:END -->', key: 'team', render: renderTeam },
+    { start: '<!-- VALUES:START -->', end: '<!-- VALUES:END -->', key: 'values', render: renderValues },
+    { start: '<!-- STATS:START -->', end: '<!-- STATS:END -->', key: 'stats', render: renderStats }
+  ]);
+
+  const servicesData = loadJSON(path.join(PAGES_DIR, 'services.json'));
+  applyPageContent('services.html', servicesData, [
+    { start: '<!-- SERVICE_ROWS:START -->', end: '<!-- SERVICE_ROWS:END -->', key: 'services', render: renderServiceRows }
+  ]);
+
+  const contactData = loadJSON(path.join(PAGES_DIR, 'contact.json'));
+  applyPageContent('contact.html', contactData, []);
+
+  const relocationData = loadJSON(path.join(PAGES_DIR, 'relocation.json'));
+  applyPageContent('relocation.html', relocationData, [
+    { start: '<!-- PRICING_TIERS:START -->', end: '<!-- PRICING_TIERS:END -->', key: 'pricing', render: renderPricingTiers }
+  ]);
+
+  // 8. Site-wide settings (phone, email, Formspree ID, social links) — applied
+  // as a final pass across every page in _site, so the footer's Instagram
+  // and LinkedIn links stay consistent everywhere, including villa and
+  // journal pages that don't otherwise go through the page-content system.
+  const settings = loadJSON(SETTINGS_FILE);
+  function walkHtmlFiles(dir, fn) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walkHtmlFiles(full, fn);
+      else if (entry.name.endsWith('.html')) fn(full);
+    }
+  }
+  walkHtmlFiles(OUT_DIR, (filePath) => {
+    const html = fs.readFileSync(filePath, 'utf8');
+    const updated = injectTokens(html, settings);
+    if (updated !== html) fs.writeFileSync(filePath, updated);
+  });
 
   console.log('Build complete →', OUT_DIR);
 }

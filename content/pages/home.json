@@ -1,0 +1,43 @@
+{
+  "hero_sub": "Protecting your investment while delivering five-star experiences for owners and guests across Koh Samui.",
+  "hero_image": "assets/img/hero.jpg",
+  "brand_banner_image": "assets/img/brand-banner.jpg",
+  "why_lead": "We treat every villa as if it were our own — combining local expertise with the discretion and precision of true luxury hospitality.",
+  "pillars": [
+    { "title": "Trusted Local Experts", "text": "A resident team on the island, on call, who know every villa, vendor, and microclimate of Koh Samui intimately." },
+    { "title": "Transparent Communication", "text": "Clear reporting and honest updates. You always know exactly how your property is performing and being cared for." },
+    { "title": "Preventative Maintenance", "text": "We anticipate issues before they become costly. Proactive care that protects value over the long term." },
+    { "title": "Luxury Hospitality Standards", "text": "Five-star service for owners and guests alike — every detail considered, nothing left to chance." }
+  ],
+  "services_lead": "A single, accountable team covering every aspect of villa ownership — so you can simply enjoy your home.",
+  "service_cards": [
+    { "title": "Property Management", "text": "End-to-end oversight of your villa, vendors, staff, and budgets." },
+    { "title": "Villa Rentals", "text": "Curated holiday rental management that maximises yield and protects the home." },
+    { "title": "Concierge", "text": "Private chefs, transfers, excursions and bespoke experiences on demand." },
+    { "title": "Housekeeping", "text": "Immaculate, hotel-grade cleaning and turnover by a trained resident team." },
+    { "title": "Maintenance", "text": "Skilled trades and preventative upkeep that keeps everything flawless." },
+    { "title": "Pool & Garden", "text": "Pristine water and lush landscaping, maintained on a precise schedule." },
+    { "title": "Owner Reporting", "text": "Clear monthly financials and performance — full transparency, always." },
+    { "title": "Security Checks", "text": "Regular inspections and monitoring for total peace of mind, year-round." }
+  ],
+  "about_image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1400&auto=format&fit=crop",
+  "about_badge_number": "12+",
+  "about_badge_label": "Years on the Island",
+  "about_paragraph_1": "Samui Luxury Stays was founded on a simple belief: that owning a villa in paradise should feel effortless. From our base in Koh Samui, we manage a select portfolio of distinguished homes for owners across the world.",
+  "about_paragraph_2": "Our resident team blends genuine local knowledge with the discretion and precision expected by international clients. We are deliberately small — accountable, responsive, and personally invested in every home we hold.",
+  "about_sig_line1": "A trusted partner, not a portal.",
+  "about_sig_line2": "Personally managed, never outsourced.",
+  "stats": [
+    { "prefix": "$", "number": "180", "suffix": "M+", "label": "Property Value Managed" },
+    { "prefix": "", "number": "40", "suffix": "+", "label": "Villas in Our Care" },
+    { "prefix": "", "number": "98", "suffix": "%", "label": "Owner Retention" },
+    { "prefix": "", "number": "24", "suffix": "/7", "label": "On-Island Response" }
+  ],
+  "testimonials": [
+    { "quote": "They manage our villa with a level of care we never expected from a distance. Reporting is impeccable, and guests leave <em>five-star reviews every time.</em>", "author": "Charles & Vivienne L.", "role": "Villa owners · London, United Kingdom" },
+    { "quote": "Truly the first management company that has felt like a genuine partner. Discreet, proactive, and <em>completely transparent</em> with every baht.", "author": "Mr. A. Karlsson", "role": "Villa owner · Stockholm, Sweden" },
+    { "quote": "Our rental income is up and our worries are gone. They anticipate problems we never even <em>knew existed.</em>", "author": "The Tan Family", "role": "Villa owners · Singapore" }
+  ],
+  "choose_lead": "When your home is worth millions, the details are everything. This is how we earn — and keep — your trust.",
+  "cta_text": "Arrange a confidential consultation and discover how effortless ownership in Koh Samui can be."
+}

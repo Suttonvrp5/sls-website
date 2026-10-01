@@ -16,11 +16,12 @@ collections:
     folder: "content/villas"
     create: true
     delete: true
-    slug: "{{slug}}"
+    slug: "{{fields.name}}"
+    identifier_field: "name"
     summary: "{{name}} — {{area}}"
     format: "json"
     fields:
-      - { label: "Villa Name", name: "name", widget: "string", hint: "e.g. Villa Saaya" }
+      - { label: "Villa Name", name: "name", widget: "string", required: true, hint: "Type this FIRST, before filling in anything else below — e.g. Villa Saaya" }
       - { label: "Area", name: "area", widget: "string", hint: "e.g. Bophut, Choeng Mon, Lipa Noi" }
       - { label: "Style / Tag", name: "style", widget: "string", hint: "e.g. Hillside, Beachfront, Headland" }
       - { label: "Bedrooms", name: "bedrooms", widget: "number", value_type: "int", min: 1, max: 20 }
@@ -53,7 +54,8 @@ collections:
         widget: "list"
         required: false
         hint: "More photos for the picture slider on the villa's own page — 10 to 12 is typical, but add as few or as many as you have. The cover photo above is always shown first."
-        field: { label: "Photo", name: "image", widget: "image" }
+        fields:
+          - { label: "Photo", name: "image", widget: "image" }
       - label: "Floor Plans"
         name: "floorplans"
         widget: "list"
@@ -88,3 +90,172 @@ collections:
         options: ["USD", "THB", "EUR", "GBP"]
       - { label: "Ownership Structure", name: "ownership_structure", widget: "string", required: false, hint: "e.g. Freehold, Leasehold (30+30+30 years), Thai Company Structure. Only needed for sale listings." }
       - { label: "Display Order", name: "order", widget: "number", value_type: "int", default: 99, hint: "Lower numbers show first." }
+
+  - name: "pages"
+    label: "Page Content"
+    files:
+      - file: "content/pages/home.json"
+        name: "home"
+        label: "Home Page"
+        fields:
+          - { label: "Hero Subtitle", name: "hero_sub", widget: "text", hint: "The line under the big headline on the homepage." }
+          - { label: "Hero Background Photo", name: "hero_image", widget: "image", media_folder: "/assets/img/site", public_folder: "/assets/img/site", hint: "Shows behind the homepage headline while the video loads (or if video can't play)." }
+          - { label: "Banner Image", name: "brand_banner_image", widget: "image", media_folder: "/assets/img/site", public_folder: "/assets/img/site", hint: "The wide photo banner just below the hero." }
+          - { label: '"Why Us" Intro Text', name: "why_lead", widget: "text" }
+          - label: "The 4 Pillars"
+            name: "pillars"
+            widget: "list"
+            min: 4
+            max: 4
+            hint: "Must stay at exactly 4 — they're shown side by side in 4 columns."
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "text", widget: "text" }
+          - { label: '"What We Do" Intro Text', name: "services_lead", widget: "text" }
+          - label: "Service Preview Cards"
+            name: "service_cards"
+            widget: "list"
+            min: 8
+            max: 8
+            hint: "Must stay at exactly 8, in this order — they're matched to the 8 service icons. To change what a card links to, edit the full description on the Services page instead."
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "text", widget: "string" }
+          - { label: "About Photo", name: "about_image", widget: "image", media_folder: "/assets/img/site", public_folder: "/assets/img/site", hint: "The photo in the \"Owners' peace of mind\" section." }
+          - { label: "About Badge Number", name: "about_badge_number", widget: "string", hint: "e.g. 12+" }
+          - { label: "About Badge Label", name: "about_badge_label", widget: "string", hint: "e.g. Years on the Island" }
+          - { label: "About Paragraph 1", name: "about_paragraph_1", widget: "text" }
+          - { label: "About Paragraph 2", name: "about_paragraph_2", widget: "text" }
+          - { label: "Signature Line 1", name: "about_sig_line1", widget: "string" }
+          - { label: "Signature Line 2", name: "about_sig_line2", widget: "string" }
+          - label: "Stats Row"
+            name: "stats"
+            widget: "list"
+            min: 4
+            max: 4
+            hint: "Must stay at exactly 4. Each stat is shown as Prefix + Number + Suffix, e.g. $ / 180 / M+ shows as \"$180M+\"."
+            fields:
+              - { label: "Prefix", name: "prefix", widget: "string", required: false, hint: "e.g. $ — leave blank if none" }
+              - { label: "Number", name: "number", widget: "string", hint: "e.g. 180" }
+              - { label: "Suffix", name: "suffix", widget: "string", required: false, hint: "e.g. M+, %, /7 — leave blank if none" }
+              - { label: "Label", name: "label", widget: "string", hint: "e.g. Property Value Managed" }
+          - label: "Testimonials"
+            name: "testimonials"
+            widget: "list"
+            min: 1
+            hint: "Rotates automatically every few seconds on the homepage. Add as many as you like. You can use <em>text</em> around a phrase to show it in gold italics, like the existing ones do."
+            fields:
+              - { label: "Quote", name: "quote", widget: "text" }
+              - { label: "Author", name: "author", widget: "string", hint: "e.g. Charles & Vivienne L." }
+              - { label: "Role / Location", name: "role", widget: "string", hint: "e.g. Villa owners · London, United Kingdom" }
+          - { label: '"Why Owners Choose Us" Intro Text', name: "choose_lead", widget: "text" }
+          - { label: "Final CTA Text", name: "cta_text", widget: "text", hint: "The line above the gold button near the bottom of the page." }
+
+      - file: "content/pages/about.json"
+        name: "about"
+        label: "About Page"
+        fields:
+          - { label: "Hero Subtitle", name: "hero_sub", widget: "text" }
+          - { label: "Team Section Intro Text", name: "team_lead", widget: "text" }
+          - label: "Team Members"
+            name: "team"
+            widget: "list"
+            min: 1
+            hint: "Add, remove or reorder team members freely."
+            fields:
+              - { label: "Photo", name: "photo", widget: "image", media_folder: "/assets/img/team", public_folder: "/assets/img/team" }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Title / Role", name: "title", widget: "string" }
+              - { label: "Bio", name: "bio", widget: "text", hint: "Start a new line to start a new paragraph." }
+          - { label: "Story Photo", name: "story_image", widget: "image", media_folder: "/assets/img/site", public_folder: "/assets/img/site" }
+          - { label: "Story Badge Number", name: "story_badge_number", widget: "string", hint: "e.g. 12+" }
+          - { label: "Story Badge Label", name: "story_badge_label", widget: "string", hint: "e.g. Years on the Island" }
+          - { label: "Story Paragraph 1", name: "story_paragraph_1", widget: "text" }
+          - { label: "Story Paragraph 2", name: "story_paragraph_2", widget: "text" }
+          - { label: "Story Paragraph 3", name: "story_paragraph_3", widget: "text" }
+          - label: "Our Principles"
+            name: "values"
+            widget: "list"
+            min: 1
+            hint: "Each one gets a small icon automatically (the icons cycle if you add more than 3)."
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "text", widget: "text" }
+          - label: "Stats Row"
+            name: "stats"
+            widget: "list"
+            min: 4
+            max: 4
+            hint: "Must stay at exactly 4. Each stat is shown as Prefix + Number + Suffix, e.g. $ / 180 / M+ shows as \"$180M+\"."
+            fields:
+              - { label: "Prefix", name: "prefix", widget: "string", required: false, hint: "e.g. $ — leave blank if none" }
+              - { label: "Number", name: "number", widget: "string", hint: "e.g. 180" }
+              - { label: "Suffix", name: "suffix", widget: "string", required: false, hint: "e.g. M+, %, /7 — leave blank if none" }
+              - { label: "Label", name: "label", widget: "string", hint: "e.g. Property Value Managed" }
+          - { label: "Final CTA Text", name: "cta_text", widget: "text" }
+
+      - file: "content/pages/services.json"
+        name: "services"
+        label: "Services Page"
+        fields:
+          - { label: "Hero Subtitle", name: "hero_sub", widget: "text" }
+          - label: "The 8 Services"
+            name: "services"
+            widget: "list"
+            min: 8
+            max: 8
+            hint: "Must stay at exactly 8, in this order — other pages link directly to each one. You can freely edit the photo, heading, paragraph and bullet points of each."
+            fields:
+              - { label: "anchor", name: "anchor", widget: "hidden" }
+              - { label: "label", name: "label", widget: "hidden" }
+              - { label: "Photo", name: "image", widget: "image", media_folder: "/assets/img/site", public_folder: "/assets/img/site" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Paragraph", name: "paragraph", widget: "text" }
+              - { label: "Bullet Points", name: "bullets", widget: "list", hint: "One line per bullet point." }
+          - { label: '"Owner Support" Intro Text', name: "support_lead", widget: "text" }
+          - { label: "Final CTA Text", name: "cta_text", widget: "text" }
+
+      - file: "content/pages/contact.json"
+        name: "contact"
+        label: "Contact Page"
+        fields:
+          - { label: "Hero Subtitle", name: "hero_sub", widget: "text" }
+          - { label: "Intro Text", name: "lead_text", widget: "text" }
+          - { label: "Office Address", name: "office_address", widget: "string" }
+          - { label: "Hours Text", name: "hours_text", widget: "string" }
+
+      - file: "content/pages/relocation.json"
+        name: "relocation"
+        label: "Relocation Page"
+        fields:
+          - { label: "Hero Subtitle", name: "hero_sub", widget: "text" }
+          - { label: '"The Problem" Intro Text', name: "problem_lead", widget: "text" }
+          - label: "Pricing Packages"
+            name: "pricing"
+            widget: "list"
+            min: 1
+            hint: "The one with a Badge Tag filled in gets highlighted as the featured package."
+            fields:
+              - { label: "Badge Tag", name: "tag", widget: "string", required: false, hint: "e.g. Most Popular — leave blank for no badge" }
+              - { label: "Package Name", name: "name", widget: "string", hint: "e.g. Scout" }
+              - { label: "Price", name: "price", widget: "string", hint: "e.g. ฿12,000" }
+              - { label: "Price Suffix", name: "price_suffix", widget: "string", required: false, hint: "e.g. one-off" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Features", name: "features", widget: "list", hint: "One line per feature." }
+              - { label: "Button Text", name: "button_label", widget: "string", hint: "e.g. Choose Scout" }
+          - { label: "Pricing Footnote", name: "pricing_note", widget: "text" }
+          - { label: "Request Form Intro Text", name: "request_lead", widget: "text" }
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - file: "content/settings.json"
+        name: "settings"
+        label: "Contact Info & Social Links"
+        fields:
+          - { label: "Telephone (displayed)", name: "phone_display", widget: "string", hint: "e.g. +66 (0) 77 000 000 — shown to visitors." }
+          - { label: "Telephone (technical)", name: "phone_href", widget: "string", hint: "Same number but digits only with country code, no spaces or brackets, e.g. +66770000000 — used behind the scenes for search engines, not shown directly." }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Formspree Form ID", name: "formspree_id", widget: "string", hint: "From https://formspree.io — this powers BOTH the Contact and Relocation forms. Create a free form there (destination: owners@samuiluxurystays.com), then paste just the ID here (the part after /f/ in the URL Formspree gives you, looks like: xyzabcde). Until this is a real ID, both forms show a thank-you message but don't actually send anywhere." }
+          - { label: "Instagram URL", name: "instagram_url", widget: "string", required: false, hint: "Full link, e.g. https://instagram.com/samuiluxurystays — leave as # if you don't have one yet." }
+          - { label: "LinkedIn URL", name: "linkedin_url", widget: "string", required: false, hint: "Full link to your LinkedIn page — leave as # if you don't have one yet." }

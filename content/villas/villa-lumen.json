@@ -1,0 +1,27 @@
+{
+  "name": "Villa Lumen",
+  "area": "Taling Ngam",
+  "style": "Hillside",
+  "bedrooms": 7,
+  "feature": "Sunset View",
+  "amenities": [
+    "Sea View",
+    "Pool",
+    "Staffed"
+  ],
+  "image": "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1400&auto=format&fit=crop",
+  "description": "Samui's largest home in our care, Villa Lumen commands the hillside above Taling Ngam with panoramic sunset views, ideal for large families or multi-villa group stays.",
+  "location": {
+    "lat": 9.4744,
+    "lng": 99.9601
+  },
+  "featured": false,
+  "order": 6,
+  "listing_type": [
+    "Rental",
+    "For Sale"
+  ],
+  "sale_price": 2850000,
+  "sale_currency": "USD",
+  "ownership_structure": "Freehold (Thai Company Structure)"
+}
