@@ -1,0 +1,30 @@
+{
+  "ownership_structure": "Freehole Chanote or Leasehold ",
+  "sale_currency": "THB",
+  "name": "Villa Maenam Hills 1",
+  "area": "Maenam Soi 1 ",
+  "featured": true,
+  "order": 1,
+  "style": "Hillside ",
+  "sale_price": 1350000,
+  "gallery": [
+    "assets/img/villas/mcan0617.png",
+    "assets/img/villas/mvua8681.png",
+    "assets/img/villas/dxbf6334.png",
+    "assets/img/villas/jzxr4619.png"
+  ],
+  "listing_type": [
+    "For Sale"
+  ],
+  "feature": "Very Private with amazing jungle sunset views",
+  "amenities": [
+    "Mountain View",
+    "Air Conditioning",
+    "Parking",
+    "Garden",
+    "Pool"
+  ],
+  "bedrooms": 4,
+  "image": "assets/img/villas/ukdi6805.png",
+  "description": "For Sale - OFF PLAN VILLA \n\nNestled on a private hillside this 4 bedroom and 4 bathroom villa "
+}
