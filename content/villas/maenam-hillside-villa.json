@@ -1,0 +1,31 @@
+{
+  "sale_currency": "THB",
+  "name": "Maenam Hillside Villa",
+  "area": "Maenam",
+  "featured": true,
+  "order": 1,
+  "style": "Jungle Sunset View ",
+  "sale_price": 13500000,
+  "gallery": [
+    {
+      "image": "assets/img/villas/mvua8681.png"
+    }
+  ],
+  "listing_type": [
+    "For Sale"
+  ],
+  "location": {
+    "lat": 9.545528,
+    "lng": 100.014583
+  },
+  "feature": "Infinity Pool, Privacy, Jungle Views",
+  "amenities": [
+    "Pool",
+    "Mountain View",
+    "Air Conditioning",
+    "Garden"
+  ],
+  "bedrooms": 4,
+  "image": "assets/img/villas/ukdi6805.png",
+  "description": "blah blah blah "
+}
