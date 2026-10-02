@@ -1,4 +1,4 @@
-javascript
+
 /**
  * Samui Luxury Stays — static site build script
  * ------------------------------------------------
