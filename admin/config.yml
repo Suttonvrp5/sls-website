@@ -7,7 +7,7 @@ backend:
 # Site settings → Identity → Invite users.
 
 media_folder: "assets/img/villas"
-public_folder: "assets/img/villas"
+public_folder: "/assets/img/villas"
 
 collections:
   - name: "villas"
