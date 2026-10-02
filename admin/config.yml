@@ -51,11 +51,10 @@ collections:
       - { label: "Or paste an image URL instead", name: "image_url", widget: "string", required: false, hint: "Only used if no photo is uploaded above." }
       - label: "Gallery"
         name: "gallery"
-        widget: "list"
+        widget: "image"
+        multiple: true
         required: false
-        hint: "More photos for the picture slider on the villa's own page — 10 to 12 is typical, but add as few or as many as you have. The cover photo above is always shown first."
-        fields:
-          - { label: "Photo", name: "image", widget: "image" }
+        hint: "More photos for the picture slider on the villa's own page. Click to open the file picker and select several photos at once (hold Ctrl/Cmd to multi-select), or drag a whole batch in together — 10 to 12 is typical, but add as few or as many as you have. The cover photo above is always shown first."
       - label: "Floor Plans"
         name: "floorplans"
         widget: "list"

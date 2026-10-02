@@ -123,7 +123,8 @@ const SITE_HEAD = `<link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../assets/css/styles.css" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />`;
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>`;
 
 const SITE_HEADER = `<header id="hdr" class="solid">
   <div class="wrap nav">
@@ -319,7 +320,6 @@ ${floorplansSection}
 </section>
 
 ${SITE_FOOTER}
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="../assets/js/main.js"></script>
 </body>
 </html>
