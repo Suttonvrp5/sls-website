@@ -1,4 +1,3 @@
-
 /**
  * Samui Luxury Stays — static site build script
  * ------------------------------------------------
@@ -98,6 +97,19 @@ function listingTypes(v) {
   return Array.isArray(v.listing_type) && v.listing_type.length ? v.listing_type : ['Rental'];
 }
 
+// Normalizes an uploaded image path so it works from ANY page depth
+// (site root like villas.html, or one level deep like villas/<slug>.html).
+// Full URLs (http/https/data:) and already-absolute paths (leading "/")
+// are left alone; a bare relative path like "assets/img/villas/x.png"
+// gets a leading "/" added so it always resolves from the site root,
+// regardless of which folder the page referencing it lives in.
+function resolveImg(src) {
+  const s = (src || '').trim();
+  if (!s) return '';
+  if (/^(https?:)?\/\//i.test(s) || /^data:/i.test(s) || s.startsWith('/')) return s;
+  return '/' + s;
+}
+
 function villaCard(v, opts) {
   opts = opts || {};
   const href = opts.href || 'contact.html';
@@ -106,7 +118,7 @@ function villaCard(v, opts) {
   const types = listingTypes(v);
   const dataType = types.map(t => t === 'For Sale' ? 'sale' : 'rental').join(' ');
   types.forEach(t => cls.push(t === 'For Sale' ? 'vc-sale' : 'vc-rental'));
-  const imageSrc = (v.image_url && v.image_url.trim()) ? v.image_url.trim() : (v.image || '');
+  const imageSrc = resolveImg((v.image_url && v.image_url.trim()) ? v.image_url.trim() : (v.image || ''));
   const metaBits = [`<span>${esc(v.bedrooms)} Bedrooms</span>`, `<span>${esc(v.feature)}</span>`];
   const amenities = Array.isArray(v.amenities) ? v.amenities.slice(0, 3) : [];
   const pills = amenities.length
@@ -163,11 +175,11 @@ const SITE_FOOTER = `<footer>
 </footer>`;
 
 function villaDetailPage(v, slug, allVillas) {
-  const coverSrc = (v.image_url && v.image_url.trim()) ? v.image_url.trim() : (v.image || '');
+  const coverSrc = resolveImg((v.image_url && v.image_url.trim()) ? v.image_url.trim() : (v.image || ''));
   const galleryImgs = Array.isArray(v.gallery)
     ? v.gallery.map(g => {
-        if (typeof g === 'string') return g.trim() || null; // older/alternate CMS format: plain string
-        return (g && typeof g.image === 'string') ? g.image.trim() || null : null;
+        if (typeof g === 'string') return resolveImg(g) || null; // older/alternate CMS format: plain string
+        return (g && typeof g.image === 'string') ? resolveImg(g.image) || null : null;
       }).filter(Boolean)
     : [];
   const allImages = [...new Set([coverSrc, ...galleryImgs].filter(Boolean))];
@@ -210,7 +222,7 @@ function villaDetailPage(v, slug, allVillas) {
   <div class="wrap">
     <div class="head-row reveal"><span class="eyebrow">Layout</span><h2>Floor <em>plans.</em></h2></div>
     <div class="floorplan-grid" style="margin-top:36px">
-      ${floorplans.map(fp => `<div class="floorplan-card reveal"><a href="${esc(fp.image)}" target="_blank" rel="noopener"><img src="${esc(fp.image)}" alt="${esc(fp.label || 'Floor plan')}" loading="lazy" /><div class="fp-label">${esc(fp.label || 'Floor Plan')}</div></a></div>`).join('\n      ')}
+      ${floorplans.map(fp => `<div class="floorplan-card reveal"><a href="${esc(resolveImg(fp.image))}" target="_blank" rel="noopener"><img src="${esc(resolveImg(fp.image))}" alt="${esc(fp.label || 'Floor plan')}" loading="lazy" /><div class="fp-label">${esc(fp.label || 'Floor Plan')}</div></a></div>`).join('\n      ')}
     </div>
   </div>
 </section>`
@@ -224,382 +236,4 @@ function villaDetailPage(v, slug, allVillas) {
       ${allImages.map(src => `<img src="${esc(src)}" alt="${esc(v.name)}" loading="lazy" />`).join('\n      ')}
     </div>
     <button class="vslider-btn vslider-prev" id="vsliderPrev" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-    <button class="vslider-btn vslider-next" id="vsliderNext" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
-    <div class="vslider-dots" id="vsliderDots">
-      ${allImages.map((_, i) => `<button data-i="${i}" class="${i === 0 ? 'active' : ''}" aria-label="Go to photo ${i + 1}"></button>`).join('')}
-    </div>
-    <div class="vslider-count"><span id="vsliderCurrent">1</span> / ${allImages.length}</div>
-  </div>
-  <script>
-    (function(){
-      var track = document.getElementById('vsliderTrack');
-      var dots = document.querySelectorAll('#vsliderDots button');
-      var counter = document.getElementById('vsliderCurrent');
-      var total = ${allImages.length};
-      var i = 0;
-      function go(n){
-        i = (n + total) % total;
-        track.style.transform = 'translateX(-' + (i * 100) + '%)';
-        dots.forEach(function(d, idx){ d.classList.toggle('active', idx === i); });
-        counter.textContent = i + 1;
-      }
-      document.getElementById('vsliderPrev').addEventListener('click', function(){ go(i - 1); });
-      document.getElementById('vsliderNext').addEventListener('click', function(){ go(i + 1); });
-      dots.forEach(function(d){ d.addEventListener('click', function(){ go(parseInt(d.dataset.i, 10)); }); });
-      var startX = null;
-      track.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
-      track.addEventListener('touchend', function(e){
-        if (startX === null) return;
-        var dx = e.changedTouches[0].clientX - startX;
-        if (Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1));
-        startX = null;
-      }, {passive:true});
-    })();
-  </script>`
-    : `<div class="vslider"><div class="vslider-track"><img src="${esc(coverSrc)}" alt="${esc(v.name)}" /></div></div>`;
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>${esc(v.name)} — ${esc(v.area)} | Samui Luxury Stays</title>
-<meta name="description" content="${esc(v.name)}: a ${esc(v.bedrooms)}-bedroom ${esc(v.style)} villa in ${esc(v.area)}, Koh Samui, managed by Samui Luxury Stays." />
-<link rel="canonical" href="https://www.samuiluxurystays.com/villas/${esc(slug)}.html" />
-<meta name="robots" content="index, follow" />
-<meta name="theme-color" content="#0B1F3A" />
-${SITE_HEAD}
-</head>
-<body>
-
-${SITE_HEADER}
-
-<section class="phero" style="min-height:38vh">
-  <div class="phero-bg" style="background-image:url('${esc(coverSrc)}')"></div>
-  <div class="phero-overlay"></div>
-  <div class="wrap">
-    <div class="crumb"><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../villas.html">Villas</a> &nbsp;/&nbsp; ${esc(v.name)}</div>
-    <h1>${esc(v.name)}</h1>
-    <p class="psub">${esc(v.area)} · ${esc(v.style)} · ${esc(v.bedrooms)} Bedrooms${isForSale && priceStr ? ` · <span style="color:var(--gold)">${priceStr}</span>` : ''}</p>
-  </div>
-</section>
-
-<section class="pad" style="padding-bottom:0">
-  <div class="wrap">
-    ${sliderBlock}
-  </div>
-</section>
-
-<section class="pad">
-  <div class="wrap vdetail-grid">
-    <div class="reveal">
-      <span class="eyebrow">About This Villa</span>
-      <div class="chip-row" style="margin-bottom:16px">${typeBadges}</div>
-      <h2>${esc(v.feature)}</h2>
-      ${paras || '<p>More detail on this villa is coming soon — enquire below and our team will send you the full listing.</p>'}
-      ${chips}
-      ${isForSale ? `<div class="a-callout" style="margin-top:30px"><b>${priceStr ? priceStr : 'Price on request'}</b><p>${v.ownership_structure ? `Ownership structure: ${esc(v.ownership_structure)}.` : ''} Contact us for full details, viewings and next steps.</p></div>` : ''}
-      <div style="margin-top:40px">
-        <span class="eyebrow">Location</span>
-        <h3 style="font-weight:400;color:var(--navy);margin:10px 0 20px">${esc(v.area)}, Koh Samui</h3>
-        ${mapBlock}
-      </div>
-    </div>
-    <div class="vdetail-card reveal" data-d="1">
-      <h4>Interested in ${esc(v.name)}?</h4>
-      <p>${isForSale && !isRental ? 'Get in touch and our team will send full purchase details, ownership information and next steps.' : 'Get in touch and our team will send full availability, rates and everything else you need.'}</p>
-      <a href="../contact.html" class="btn btn-navy" style="width:100%;justify-content:center">${isForSale && !isRental ? 'Enquire About Purchase' : 'Enquire Now'} <span class="arr">→</span></a>
-    </div>
-  </div>
-</section>
-
-${floorplansSection}
-
-<section class="cta-band">
-  <div class="wrap reveal"><span class="eyebrow center">Explore More</span><h2>See more of our <em>villa collection.</em></h2><p>${esc(v.name)} is one of several distinguished homes we manage across Koh Samui.</p><a href="../villas.html" class="btn btn-gold">View All Villas <span class="arr">→</span></a></div>
-</section>
-
-${SITE_FOOTER}
-<script src="../assets/js/main.js"></script>
-</body>
-</html>
-`;
-}
-
-function injectBetweenMarkers(html, startMarker, endMarker, content) {
-  const pattern = new RegExp(`${startMarker}[\\s\\S]*?${endMarker}`);
-  if (!pattern.test(html)) {
-    console.warn(`⚠️  Markers ${startMarker} / ${endMarker} not found — skipping injection.`);
-    return html;
-  }
-  return html.replace(pattern, `${startMarker}\n${content}\n${endMarker}`);
-}
-
-// ---------- page content renderers (Home / About / Services / Relocation) ----------
-// These turn the editable lists from content/pages/*.json back into the
-// exact same markup the page used to have hard-coded, so staff can add,
-// remove or re-word entries from /admin without ever touching a template.
-
-function renderPillars(items) {
-  if (!Array.isArray(items) || !items.length) return '';
-  return items.map((p, i) =>
-    `<div class="pillar reveal" data-d="${(i % 4) + 1}"><div class="pn">${String(i + 1).padStart(2, '0')}</div><h3>${esc(p.title)}</h3><p>${esc(p.text)}</p></div>`
-  ).join('\n      ');
-}
-
-const HOME_SERVICE_META = [
-  { anchor: 'management', icon: 'property-management' },
-  { anchor: 'rentals', icon: 'villa-rentals' },
-  { anchor: 'concierge', icon: 'concierge' },
-  { anchor: 'housekeeping', icon: 'housekeeping' },
-  { anchor: 'maintenance', icon: 'maintenance' },
-  { anchor: 'poolgarden', icon: 'pool-garden' },
-  { anchor: 'reporting', icon: 'owner-reporting' },
-  { anchor: 'security', icon: 'security-checks' }
-];
-function renderServiceCardsHome(items) {
-  if (!Array.isArray(items) || !items.length) return '';
-  return items.map((s, i) => {
-    const meta = HOME_SERVICE_META[i] || HOME_SERVICE_META[HOME_SERVICE_META.length - 1];
-    return `<a class="svc link reveal" data-d="${(i % 4) + 1}" href="services.html#${meta.anchor}"><div class="ico"><img src="assets/img/icons/${meta.icon}.png" alt="${esc(s.title)}" /></div><div class="svc-bot"><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></div></a>`;
-  }).join('\n      ');
-}
-
-function renderStats(items) {
-  if (!Array.isArray(items) || !items.length) return '';
-  return items.map((s, i) =>
-    `<div class="stat reveal" data-d="${(i % 4) + 1}"><b>${esc(s.prefix || '')}<em>${esc(s.number)}</em>${esc(s.suffix || '')}</b><span>${esc(s.label)}</span></div>`
-  ).join('\n    ');
-}
-
-function renderTestimonialsScript(items) {
-  if (!Array.isArray(items) || !items.length) return '';
-  const data = items.map(t => ({ q: t.quote, a: t.author, r: t.role }));
-  return `<script>window.SLS_TESTIMONIALS = ${JSON.stringify(data)};</script>`;
-}
-
-function renderTeam(items) {
-  if (!Array.isArray(items) || !items.length) return '';
-  return items.map((m, i) => {
-    const paras = String(m.bio || '').split(/\n+/).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('');
-    return `<div class="member reveal" data-d="${(i % 4) + 1}"><div class="mimg" style="background-image:url('${esc(m.photo)}')"></div><h4>${esc(m.name)}</h4><span>${esc(m.title)}</span>${paras}</div>`;
-  }).join('\n      ');
-}
-
-const VALUE_ICONS = [
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/></svg>',
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V5h16v14M8 19v-6h3v6m2 0v-9h3v9"/></svg>',
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5"/></svg>'
-];
-function renderValues(items) {
-  if (!Array.isArray(items) || !items.length) return '';
-  return items.map((v, i) =>
-    `<div class="value reveal" data-d="${(i % 4) + 1}"><div class="vi">${VALUE_ICONS[i % VALUE_ICONS.length]}</div><h3>${esc(v.title)}</h3><p>${esc(v.text)}</p></div>`
-  ).join('\n      ');
-}
-
-function renderServiceRows(items) {
-  if (!Array.isArray(items) || !items.length) return '';
-  return items.map((s, i) => {
-    const flip = i % 2 === 1 ? ' flip' : '';
-    const bullets = Array.isArray(s.bullets) ? s.bullets.map(b => `<li>${esc(b)}</li>`).join('') : '';
-    return `    <div class="srow${flip} reveal" id="${esc(s.anchor)}">
-      <div class="srow-media" style="background-image:url('${esc(s.image)}')"></div>
-      <div><div class="sn">${esc(s.label)}</div><h3>${esc(s.heading)}</h3><p>${esc(s.paragraph)}</p><ul>${bullets}</ul></div>
-    </div>`;
-  }).join('\n\n');
-}
-
-function renderPricingTiers(items) {
-  if (!Array.isArray(items) || !items.length) return '';
-  return items.map((t, i) => {
-    const isFeat = t.tag && t.tag.trim();
-    const cls = isFeat ? 'ptier feat reveal' : 'ptier reveal';
-    const tagHtml = isFeat ? `<div class="ptier-tag">${esc(t.tag)}</div>` : '';
-    const features = Array.isArray(t.features) ? t.features.map(f => `<li>${esc(f)}</li>`).join('') : '';
-    const btn = isFeat
-      ? `<a href="#request" class="btn btn-gold">${esc(t.button_label || ('Choose ' + t.name))}</a>`
-      : `<a href="#request" class="btn btn-dark-ghost" style="border:1px solid var(--navy);color:var(--navy)">${esc(t.button_label || ('Choose ' + t.name))}</a>`;
-    return `      <div class="${cls}" data-d="${i + 1}">
-        ${tagHtml}
-        <div class="ptier-name">${esc(t.name)}</div>
-        <div class="price">${esc(t.price)}<span> ${esc(t.price_suffix || '')}</span></div>
-        <p class="ptier-desc">${esc(t.description)}</p>
-        <ul>${features}</ul>
-        ${btn}
-      </div>`;
-  }).join('\n\n');
-}
-
-function copyRecursive(src, dest, skip) {
-  const entries = fs.readdirSync(src, { withFileTypes: true });
-  fs.mkdirSync(dest, { recursive: true });
-  for (const entry of entries) {
-    if (skip && skip.includes(entry.name)) continue;
-    const s = path.join(src, entry.name);
-    const d = path.join(dest, entry.name);
-    if (entry.isDirectory()) {
-      copyRecursive(s, d, skip);
-    } else {
-      fs.copyFileSync(s, d);
-    }
-  }
-}
-
-// ---------- overview map (villas.html) ----------
-function overviewMapScript(villas) {
-  const points = villas
-    .filter(v => v.location && typeof v.location.lat === 'number' && typeof v.location.lng === 'number')
-    .map(v => ({
-      lat: v.location.lat, lng: v.location.lng, name: v.name, area: v.area,
-      slug: slugify(v._file)
-    }));
-  if (!points.length) return '';
-  return `<script>
-(function(){
-  var pts = ${JSON.stringify(points)};
-  var map = L.map('villasMap', {scrollWheelZoom:false});
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors', maxZoom: 18
-  }).addTo(map);
-  var bounds = [];
-  pts.forEach(function(p){
-    var m = L.marker([p.lat, p.lng]).addTo(map);
-    m.bindPopup('<b>' + p.name + '</b><br>' + p.area + '<br><a href="villas/' + p.slug + '.html">View villa \u2192</a>');
-    bounds.push([p.lat, p.lng]);
-  });
-  if (bounds.length > 1) { map.fitBounds(bounds, {padding:[30,30]}); }
-  else if (bounds.length === 1) { map.setView(bounds[0], 12); }
-})();
-</script>`;
-}
-
-// ---------- build ----------
-function build() {
-  console.log('Building Samui Luxury Stays…');
-
-  if (fs.existsSync(OUT_DIR)) fs.rmSync(OUT_DIR, { recursive: true, force: true });
-  fs.mkdirSync(OUT_DIR, { recursive: true });
-
-  // 1. Copy everything except source/config files we don't want shipped as-is
-  copyRecursive(ROOT, OUT_DIR, [
-    '_site', 'node_modules', 'content', 'build.js',
-    'package.json', 'package-lock.json', 'netlify.toml', '.git', '.gitignore',
-    'CMS_SETUP.md'
-  ]);
-
-  // 2. Copy admin + content along so Decap CMS can read/write them via the Git Gateway
-  copyRecursive(path.join(ROOT, 'admin'), path.join(OUT_DIR, 'admin'));
-  copyRecursive(CONTENT_DIR, path.join(OUT_DIR, 'content', 'villas'));
-  if (fs.existsSync(PAGES_DIR)) copyRecursive(PAGES_DIR, path.join(OUT_DIR, 'content', 'pages'));
-  if (fs.existsSync(SETTINGS_FILE)) {
-    fs.mkdirSync(path.join(OUT_DIR, 'content'), { recursive: true });
-    fs.copyFileSync(SETTINGS_FILE, path.join(OUT_DIR, 'content', 'settings.json'));
-  }
-
-  // 3. Load villa data
-  const villas = loadVillas();
-  const featured = villas.filter(v => v.featured);
-  console.log(`Found ${villas.length} villas (${featured.length} featured).`);
-
-  // 4. Generate an individual detail page for every villa
-  const villasOutDir = path.join(OUT_DIR, 'villas');
-  fs.mkdirSync(villasOutDir, { recursive: true });
-  villas.forEach(v => {
-    const slug = slugify(v._file);
-    const html = villaDetailPage(v, slug, villas);
-    fs.writeFileSync(path.join(villasOutDir, `${slug}.html`), html);
-  });
-  console.log(`Generated ${villas.length} villa detail pages.`);
-
-  // 5. Inject into villas.html (all villas — cards now link to their own page)
-  const villasPath = path.join(OUT_DIR, 'villas.html');
-  if (fs.existsSync(villasPath)) {
-    let html = fs.readFileSync(villasPath, 'utf8');
-    const cards = villas.map(v =>
-      villaCard(v, { href: `villas/${slugify(v._file)}.html` })
-    ).join('\n      ');
-    html = injectBetweenMarkers(html, '<!-- ALL_VILLAS:START -->', '<!-- ALL_VILLAS:END -->', '      ' + cards);
-    html = injectBetweenMarkers(html, '<!-- VILLAS_MAP_SCRIPT:START -->', '<!-- VILLAS_MAP_SCRIPT:END -->', overviewMapScript(villas));
-    fs.writeFileSync(villasPath, html);
-  }
-
-  // 6. Inject into index.html (featured villas — link to their own page, first gets the "tall" card)
-  const indexPath = path.join(OUT_DIR, 'index.html');
-  if (fs.existsSync(indexPath)) {
-    let html = fs.readFileSync(indexPath, 'utf8');
-    const cards = featured.map((v, i) =>
-      villaCard(v, { href: `villas/${slugify(v._file)}.html`, tall: i === 0 })
-    ).join('\n      ');
-    html = injectBetweenMarkers(html, '<!-- FEATURED_VILLAS:START -->', '<!-- FEATURED_VILLAS:END -->', '      ' + cards);
-    fs.writeFileSync(indexPath, html);
-  }
-
-  // 7. Editable page content — Home / About / Services / Contact / Relocation.
-  // Each page's {{CMS:field}} tokens and <!--CMS:field--> text blocks are
-  // filled from content/pages/<page>.json, and the repeating sections
-  // (pillars, service cards, stats, testimonials, team, values, service
-  // rows, pricing tiers) are regenerated from their JSON arrays.
-  function applyPageContent(file, data, markerFillers) {
-    const filePath = path.join(OUT_DIR, file);
-    if (!fs.existsSync(filePath)) return;
-    let html = fs.readFileSync(filePath, 'utf8');
-    html = injectTokens(html, data);
-    html = injectCommentFields(html, data);
-    (markerFillers || []).forEach(({ start, end, render, key }) => {
-      html = injectBetweenMarkers(html, start, end, render(data[key]));
-    });
-    fs.writeFileSync(filePath, html);
-  }
-
-  const homeData = loadJSON(path.join(PAGES_DIR, 'home.json'));
-  applyPageContent('index.html', homeData, [
-    { start: '<!-- PILLARS:START -->', end: '<!-- PILLARS:END -->', key: 'pillars', render: renderPillars },
-    { start: '<!-- SERVICE_CARDS:START -->', end: '<!-- SERVICE_CARDS:END -->', key: 'service_cards', render: renderServiceCardsHome },
-    { start: '<!-- STATS:START -->', end: '<!-- STATS:END -->', key: 'stats', render: renderStats },
-    { start: '<!-- TESTIMONIALS_DATA:START -->', end: '<!-- TESTIMONIALS_DATA:END -->', key: 'testimonials', render: renderTestimonialsScript }
-  ]);
-
-  const aboutData = loadJSON(path.join(PAGES_DIR, 'about.json'));
-  applyPageContent('about.html', aboutData, [
-    { start: '<!-- TEAM:START -->', end: '<!-- TEAM:END -->', key: 'team', render: renderTeam },
-    { start: '<!-- VALUES:START -->', end: '<!-- VALUES:END -->', key: 'values', render: renderValues },
-    { start: '<!-- STATS:START -->', end: '<!-- STATS:END -->', key: 'stats', render: renderStats }
-  ]);
-
-  const servicesData = loadJSON(path.join(PAGES_DIR, 'services.json'));
-  applyPageContent('services.html', servicesData, [
-    { start: '<!-- SERVICE_ROWS:START -->', end: '<!-- SERVICE_ROWS:END -->', key: 'services', render: renderServiceRows }
-  ]);
-
-  const contactData = loadJSON(path.join(PAGES_DIR, 'contact.json'));
-  applyPageContent('contact.html', contactData, []);
-
-  const relocationData = loadJSON(path.join(PAGES_DIR, 'relocation.json'));
-  applyPageContent('relocation.html', relocationData, [
-    { start: '<!-- PRICING_TIERS:START -->', end: '<!-- PRICING_TIERS:END -->', key: 'pricing', render: renderPricingTiers }
-  ]);
-
-  // 8. Site-wide settings (phone, email, Formspree ID, social links) — applied
-  // as a final pass across every page in _site, so the footer's Instagram
-  // and LinkedIn links stay consistent everywhere, including villa and
-  // journal pages that don't otherwise go through the page-content system.
-  const settings = loadJSON(SETTINGS_FILE);
-  function walkHtmlFiles(dir, fn) {
-    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-      const full = path.join(dir, entry.name);
-      if (entry.isDirectory()) walkHtmlFiles(full, fn);
-      else if (entry.name.endsWith('.html')) fn(full);
-    }
-  }
-  walkHtmlFiles(OUT_DIR, (filePath) => {
-    const html = fs.readFileSync(filePath, 'utf8');
-    const updated = injectTokens(html, settings);
-    if (updated !== html) fs.writeFileSync(filePath, updated);
-  });
-
-  console.log('Build complete →', OUT_DIR);
-}
-
-build();
+    <button class="vslider-btn vslider-next" id="vsliderNext" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
