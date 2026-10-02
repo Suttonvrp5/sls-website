@@ -49,7 +49,7 @@ collections:
         hint: "Tick everything that applies — only the first 3 checked will show as tags on the villa card, so put the most important ones first. To add a new amenity option to this list, ask your developer to add one line to admin/config.yml."
       - { label: "Photo", name: "image", widget: "image", hint: "Main cover photo — shown on the villa card and as the first slide." }
       - { label: "Or paste an image URL instead", name: "image_url", widget: "string", required: false, hint: "Only used if no photo is uploaded above." }
-            - label: "Gallery"
+      - label: "Gallery"
         name: "gallery"
         widget: "image"
         multiple: true
