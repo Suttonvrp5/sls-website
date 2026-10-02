@@ -168,8 +168,7 @@ function villaDetailPage(v, slug, allVillas) {
         if (typeof g === 'string') return g.trim() || null; // older/alternate CMS format: plain string
         return (g && typeof g.image === 'string') ? g.image.trim() || null : null;
       }).filter(Boolean)
-    : [];
-  const allImages = [coverSrc, ...galleryImgs].filter(Boolean);
+    : [];const allImages = [coverSrc, ...galleryImgs].filter(Boolean);
   const amenities = Array.isArray(v.amenities) ? v.amenities : [];
   const chips = amenities.length
     ? `<div class="chip-row">${amenities.map(a => `<span class="chip">${esc(a)}</span>`).join('')}</div>`
