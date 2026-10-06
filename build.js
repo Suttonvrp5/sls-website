@@ -110,6 +110,16 @@ function resolveImg(src) {
   return '/' + s;
 }
 
+// Diagonal "Rented" / "Sold" ribbon shown across a villa's photo — on its
+// card (villas.html, index.html) and on its own detail page — whenever
+// staff set Status to something other than "Available" in /admin.
+function statusRibbon(v) {
+  const status = v.status;
+  if (status !== 'Rented' && status !== 'Sold') return '';
+  const cls = status === 'Sold' ? 'sold' : 'rented';
+  return `<div class="status-ribbon ${cls}">${esc(status)}</div>`;
+}
+
 function villaCard(v, opts) {
   opts = opts || {};
   const href = opts.href || 'contact.html';
@@ -128,7 +138,7 @@ function villaCard(v, opts) {
   const saleBadge = forSale
     ? `<div class="vsale-badge">${formatPrice(v.sale_price, v.sale_currency) || 'For Sale'}</div>`
     : '';
-  return `<a href="${href}" class="${cls.join(' ')}" data-type="${dataType}"><div class="vimg" style="background-image:url('${esc(imageSrc)}')"></div><div class="vgrad"></div>${saleBadge}<div class="vbody"><span class="vtag">${esc(v.area)} · ${esc(v.style)}</span><h3>${esc(v.name)}</h3><div class="vmeta">${metaBits.join('')}</div>${pills}</div></a>`;
+  return `<a href="${href}" class="${cls.join(' ')}" data-type="${dataType}"><div class="vimg" style="background-image:url('${esc(imageSrc)}')"></div><div class="vgrad"></div>${statusRibbon(v)}${saleBadge}<div class="vbody"><span class="vtag">${esc(v.area)} · ${esc(v.style)}</span><h3>${esc(v.name)}</h3><div class="vmeta">${metaBits.join('')}</div>${pills}</div></a>`;
 }
 
 // ---------- villa detail page ----------
@@ -173,6 +183,66 @@ const SITE_FOOTER = `<footer>
     </div>
   </div>
 </footer>`;
+
+// Plays the browser's own video player for a video file (uploaded in admin, or a direct https link).
+function fileVideo(src, poster) {
+  const type = /\.webm(\?|$)/i.test(src) ? 'video/webm' : 'video/mp4';
+  return `<div class="vvideo"><video controls playsinline preload="metadata"${poster ? ` poster="${esc(poster)}"` : ''}><source src="${esc(src)}" type="${type}" />Your browser can't play this video.</video></div>`;
+}
+
+// Turns a pasted YouTube or Vimeo link into a safe, responsive embed.
+// Returns '' for blank or unrecognised links, so a bad link never breaks a page.
+function videoEmbed(url, title, poster) {
+  const u = String(url || '').trim();
+  if (!u) return '';
+  let src = '';
+  let m;
+  if ((m = u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/i))) {
+    src = `https://www.youtube-nocookie.com/embed/${m[1]}?rel=0`;
+  } else if ((m = u.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([A-Za-z0-9]+))?/i))) {
+    src = `https://player.vimeo.com/video/${m[1]}${m[2] ? `?h=${m[2]}` : ''}`;
+  }
+  if (!src) {
+    // A direct link to a video file (.mp4 / .webm / .mov / .m4v) plays in the browser's own player
+    if (/^https:\/\/[^\s"'<>]+\.(mp4|webm|mov|m4v)(\?[^\s"'<>]*)?$/i.test(u)) return fileVideo(u, poster);
+    return '';
+  }
+  return `<div class="vvideo"><iframe src="${esc(src)}" title="${esc(title || 'Villa video tour')}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
+}
+
+// Social share row (Facebook, WhatsApp, LinkedIn, copy link, native share on phones).
+// Used on villa pages and journal articles. Needs the page's ABSOLUTE url.
+function buildShareBlock(pageUrl, shareText, label) {
+  const eu = encodeURIComponent;
+  return `<div class="share-row">
+        <span class="share-label">${esc(label)}</span>
+        <div class="share-btns">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=${eu(pageUrl)}" target="_blank" rel="noopener" aria-label="Share on Facebook" title="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.5-3h-3V8.6c0-.9.3-1.5 1.6-1.5H16.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21z"/></svg></a>
+          <a href="https://wa.me/?text=${eu(shareText + ' ' + pageUrl)}" target="_blank" rel="noopener" aria-label="Share on WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3zm0 1.7a7.3 7.3 0 1 1-3.8 13.5l-.3-.2-2.4.6.6-2.3-.2-.3A7.3 7.3 0 0 1 12 4.7zm-3 3.6c-.2 0-.5.1-.7.4-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 2.2.9 2.6.7 3.1.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3l-1.6-.8c-.2-.1-.4-.1-.6.1l-.7.9c-.1.2-.3.2-.5.1-.3-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.4.2-.4v-.4l-.7-1.7c-.2-.4-.4-.4-.5-.4z"/></svg></a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=${eu(pageUrl)}" target="_blank" rel="noopener" aria-label="Share on LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.2 8.5H8V19H5.2zM6.6 4a1.6 1.6 0 1 1 0 3.2 1.6 1.6 0 0 1 0-3.2zM10 8.5h2.7v1.4c.4-.7 1.3-1.7 3.1-1.7 3.3 0 3.9 2.2 3.9 5V19H17v-5c0-1.2 0-2.7-1.7-2.7s-1.9 1.3-1.9 2.6V19H10z"/></svg></a>
+          <button type="button" id="shareCopy" aria-label="Copy link" title="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></button>
+          <button type="button" id="shareNative" aria-label="More sharing options" title="More" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15V4M8 8l4-4 4 4M5 13v6h14v-6"/></svg></button>
+        </div>
+        <span class="share-note" id="shareNote" aria-live="polite"></span>
+      </div>
+      <script>
+        (function(){
+          var url = ${JSON.stringify(pageUrl)}, title = ${JSON.stringify(shareText)};
+          var note = document.getElementById('shareNote');
+          function say(t){ note.textContent = t; setTimeout(function(){ note.textContent = ''; }, 2200); }
+          document.getElementById('shareCopy').addEventListener('click', function(){
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(url).then(function(){ say('Link copied'); }, function(){ say(url); });
+            } else { say(url); }
+          });
+          if (navigator.share) {
+            var b = document.getElementById('shareNative');
+            b.hidden = false;
+            b.addEventListener('click', function(){ navigator.share({title: title, url: url}).catch(function(){}); });
+          }
+        })();
+      </script>`;
+}
 
 function villaDetailPage(v, slug, allVillas) {
   const coverSrc = resolveImg((v.image_url && v.image_url.trim()) ? v.image_url.trim() : (v.image || ''));
@@ -270,6 +340,13 @@ function villaDetailPage(v, slug, allVillas) {
   </script>`
     : `<div class="vslider"><div class="vslider-track"><img src="${esc(coverSrc)}" alt="${esc(v.name)}" /></div></div>`;
 
+  // Social sharing: absolute page URL + cover image (social sites need full URLs)
+  const SITE_URL = 'https://www.samuiluxurystays.com';
+  const pageUrl = `${SITE_URL}/villas/${slug}.html`;
+  const ogImage = !coverSrc ? '' : (/^(https?:)?\/\//i.test(coverSrc) ? coverSrc : SITE_URL + coverSrc);
+  const shareText = `${v.name} — ${v.area}, Koh Samui`;
+  const shareBlock = buildShareBlock(pageUrl, shareText, 'Share this villa');
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -281,6 +358,15 @@ function villaDetailPage(v, slug, allVillas) {
 <link rel="canonical" href="https://www.samuiluxurystays.com/villas/${esc(slug)}.html" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#0B1F3A" />
+<meta property="og:site_name" content="Samui Luxury Stays" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="${esc(v.name)} — ${esc(v.area)}, Koh Samui" />
+<meta property="og:description" content="${esc(v.feature || `${v.bedrooms}-bedroom ${v.style} villa in ${v.area}, Koh Samui`)}" />
+<meta property="og:url" content="${esc(pageUrl)}" />
+${ogImage ? `<meta property="og:image" content="${esc(ogImage)}" />` : ''}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${esc(v.name)} — ${esc(v.area)}, Koh Samui" />
+${ogImage ? `<meta name="twitter:image" content="${esc(ogImage)}" />` : ''}
 ${SITE_HEAD}
 </head>
 <body>
@@ -290,6 +376,7 @@ ${SITE_HEADER}
 <section class="phero" style="min-height:38vh">
   <div class="phero-bg" style="background-image:url('${esc(coverSrc)}')"></div>
   <div class="phero-overlay"></div>
+  ${statusRibbon(v)}
   <div class="wrap">
     <div class="crumb"><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../villas.html">Villas</a> &nbsp;/&nbsp; ${esc(v.name)}</div>
     <h1>${esc(v.name)}</h1>
@@ -300,6 +387,7 @@ ${SITE_HEADER}
 <section class="pad" style="padding-bottom:0">
   <div class="wrap">
     ${sliderBlock}
+    ${videoEmbed(v.video_url, v.name + ' — video tour', coverSrc) || (v.video_file && /\.(mp4|webm|mov|m4v)$/i.test(String(v.video_file).trim()) ? fileVideo(resolveImg(String(v.video_file).trim()), coverSrc) : '')}
   </div>
 </section>
 
@@ -309,7 +397,7 @@ ${SITE_HEADER}
       <span class="eyebrow">About This Villa</span>
       <div class="chip-row" style="margin-bottom:16px">${typeBadges}</div>
       <h2>${esc(v.feature)}</h2>
-      ${paras || '<p>More detail on this villa is coming soon — enquire below and our team will send you the full listing.</p>'}
+      <div class="vdesc">${paras || '<p>More detail on this villa is coming soon — enquire below and our team will send you the full listing.</p>'}</div>
       ${chips}
       ${isForSale ? `<div class="a-callout" style="margin-top:30px"><b>${priceStr ? priceStr : 'Price on request'}</b><p>${v.ownership_structure ? `Ownership structure: ${esc(v.ownership_structure)}.` : ''} Contact us for full details, viewings and next steps.</p></div>` : ''}
       <div style="margin-top:40px">
@@ -322,6 +410,7 @@ ${SITE_HEADER}
       <h4>Interested in ${esc(v.name)}?</h4>
       <p>${isForSale && !isRental ? 'Get in touch and our team will send full purchase details, ownership information and next steps.' : 'Get in touch and our team will send full availability, rates and everything else you need.'}</p>
       <a href="../contact.html" class="btn btn-navy" style="width:100%;justify-content:center">${isForSale && !isRental ? 'Enquire About Purchase' : 'Enquire Now'} <span class="arr">→</span></a>
+      ${shareBlock}
     </div>
   </div>
 </section>
@@ -606,7 +695,14 @@ function build() {
     }
   }
   walkHtmlFiles(OUT_DIR, (filePath) => {
-    const html = fs.readFileSync(filePath, 'utf8');
+    let html = fs.readFileSync(filePath, 'utf8');
+    // Journal articles: add a share row just before the "Back to the Journal" link.
+    const base = path.basename(filePath);
+    if (/^journal-.+\.html$/.test(base) && !html.includes('share-row') && html.includes('<div class="a-back">')) {
+      const pageUrl = `https://www.samuiluxurystays.com/${base}`;
+      const t = (html.match(/<title>([^<]*?)(?:\s*\|[^<]*)?<\/title>/) || [])[1] || 'Samui Luxury Stays';
+      html = html.replace('<div class="a-back">', `<div class="wrap" style="max-width:720px;margin:0 auto 10px">${buildShareBlock(pageUrl, t.replace(/&amp;/g, '&'), 'Share this article')}</div>\n\n<div class="a-back">`);
+    }
     const updated = injectTokens(html, settings);
     if (updated !== html) fs.writeFileSync(filePath, updated);
   });
