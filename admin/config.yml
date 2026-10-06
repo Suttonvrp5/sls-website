@@ -80,6 +80,23 @@ collections:
         default: ["Rental"]
         options: ["Rental", "For Sale"]
         hint: "Tick both if this villa is available to rent AND currently for sale."
+      - label: "Video Tour Link"
+        name: "video_url"
+        widget: "string"
+        required: false
+        hint: "Optional. Paste a YouTube or Vimeo link, or a direct https link to a video file (.mp4). A video player appears below the photo slider on this villa's page. Leave blank for no video. Tip: on YouTube, 'Unlisted' keeps it out of public search while still playing on your site."
+      - label: "Or Upload Your Own Video"
+        name: "video_file"
+        widget: "file"
+        required: false
+        hint: "Optional alternative to the link above — upload your own .mp4 walkthrough (keep it under about 25 MB: 1080p or 720p, a minute or two long). Longer or larger videos play best from YouTube or Vimeo instead. If both are filled in, the link above is used."
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        required: false
+        default: "Available"
+        options: ["Available", "Rented", "Sold"]
+        hint: "Switch this once a villa is rented or sold — a banner appears on its photo everywhere on the site (card and its own page) so visitors see it's no longer available. Switch back to Available to remove the banner."
       - { label: "Sale Price", name: "sale_price", widget: "number", required: false, hint: "Only used if \"For Sale\" is ticked above. Enter numbers only, e.g. 1850000." }
       - label: "Sale Currency"
         name: "sale_currency"
