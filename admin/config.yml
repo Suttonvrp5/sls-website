@@ -96,7 +96,7 @@ collections:
         required: false
         default: "Available"
         options: ["Available", "Rented", "Sold"]
-        hint: "Switch this once a villa is rented or sold — a banner appears on its photo everywhere on the site (card and its own page) so visitors see it's no longer available. Switch back to Available to remove the banner."
+        hint: "Switch this once a villa is rented or sold — a banner appears across its photo everywhere on the site (card and its own page): green for Available, navy for Rented, red for Sold. Leave it on Available while the villa is on the market."
       - { label: "Sale Price", name: "sale_price", widget: "number", required: false, hint: "Only used if \"For Sale\" is ticked above. Enter numbers only, e.g. 1850000." }
       - label: "Sale Currency"
         name: "sale_currency"
