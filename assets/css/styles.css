@@ -286,6 +286,8 @@ textarea{resize:vertical;min-height:108px}
 .vdetail-card{background:var(--grey);border-radius:8px;padding:34px;position:sticky;top:110px}
 .vdetail-card h4{font-weight:500;font-size:1.2rem;color:var(--navy);margin-bottom:8px}
 .vdetail-card p{color:var(--muted);font-size:.9rem;margin-bottom:22px}
+.vdesc p{margin-bottom:18px;line-height:1.75;color:var(--muted)}
+.vdesc p:last-child{margin-bottom:0}
 .villa-map{width:100%;height:380px;border-radius:8px;overflow:hidden;border:1px solid var(--hairline)}
 .villas-map-strip{width:100%;height:460px;border-radius:8px;overflow:hidden;border:1px solid var(--hairline)}
 .leaflet-popup-content b{color:var(--navy);font-weight:600}
@@ -320,6 +322,11 @@ textarea{resize:vertical;min-height:108px}
 
 /* SALE BADGE + TABS */
 .vsale-badge{position:absolute;top:16px;right:16px;background:var(--gold);color:var(--navy);font-weight:600;font-size:.82rem;padding:6px 14px;border-radius:20px;z-index:2}
+
+/* STATUS RIBBON — diagonal "Rented"/"Sold" banner across a corner of the photo */
+.status-ribbon{position:absolute;top:22px;left:-46px;width:180px;padding:8px 0;text-align:center;transform:rotate(-45deg);font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;z-index:3;box-shadow:0 3px 10px rgba(0,0,0,.3)}
+.status-ribbon.sold{background:#A6433C}
+.status-ribbon.rented{background:var(--navy)}
 .vtabs{display:flex;gap:10px;margin-bottom:36px}
 .vtab{background:none;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);padding:10px 22px;border-radius:20px;font-size:.88rem;font-weight:500;cursor:pointer;transition:all .3s var(--ease)}
 .vtab.active{background:var(--gold);border-color:var(--gold);color:var(--navy)}
@@ -398,3 +405,18 @@ footer{background:var(--navy-deep);color:#fff;padding:90px 0 36px}
   *{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   .reveal{opacity:1;transform:none}
 }
+
+/* SHARE ROW — villa page social sharing */
+.share-row{margin-top:22px;padding-top:20px;border-top:1px solid rgba(11,31,58,.12);text-align:center}
+.share-label{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.share-btns{display:flex;justify-content:center;gap:10px}
+.share-btns a,.share-btns button{width:42px;height:42px;border-radius:50%;border:1px solid rgba(11,31,58,.2);background:#fff;color:var(--navy);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,color .2s}
+.share-btns a:hover,.share-btns button:hover{background:var(--navy);color:#fff}
+.share-btns button[hidden]{display:none}
+.share-btns svg{width:19px;height:19px}
+.share-note{display:block;min-height:1.2em;margin-top:10px;font-size:.8rem;color:var(--muted)}
+
+/* VILLA VIDEO TOUR — responsive 16:9 embed under the photo slider */
+.vvideo{position:relative;width:100%;aspect-ratio:16/9;margin-top:28px;border-radius:8px;overflow:hidden;background:#0b2742}
+.vvideo iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vvideo video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
