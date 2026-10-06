@@ -327,6 +327,7 @@ textarea{resize:vertical;min-height:108px}
 .status-ribbon{position:absolute;top:22px;left:-46px;width:180px;padding:8px 0;text-align:center;transform:rotate(-45deg);font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;z-index:3;box-shadow:0 3px 10px rgba(0,0,0,.3)}
 .status-ribbon.sold{background:#A6433C}
 .status-ribbon.rented{background:var(--navy)}
+.status-ribbon.available{background:#2F7D5B}
 .vtabs{display:flex;gap:10px;margin-bottom:36px}
 .vtab{background:none;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);padding:10px 22px;border-radius:20px;font-size:.88rem;font-weight:500;cursor:pointer;transition:all .3s var(--ease)}
 .vtab.active{background:var(--gold);border-color:var(--gold);color:var(--navy)}
