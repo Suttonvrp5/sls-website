@@ -69,6 +69,15 @@ function loadJSON(filePath) {
 // site-wide settings pass. Leaves unknown tokens alone rather than
 // erroring, so a field that hasn't been added to a page's JSON yet just
 // shows its original template text.
+// Turns a typed phone number like "+66 (0) 98 439 8948" into a dialable "tel:" value
+// ("+66984398948"): drops the "(0)" trunk digit, spaces, dashes and brackets.
+function telHref(raw) {
+  let t = String(raw || '').replace(/\(0\)/g, '').trim();
+  const plus = t.startsWith('+') ? '+' : '';
+  const digits = t.replace(/\D/g, '');
+  return digits.length >= 6 ? plus + digits : '';
+}
+
 function injectTokens(html, data) {
   if (!data) return html;
   return html.replace(/\{\{CMS:([a-zA-Z0-9_]+)\}\}/g, (match, key) => {
@@ -701,6 +710,19 @@ function build() {
       const pageUrl = `https://www.samuiluxurystays.com/${base}`;
       const t = (html.match(/<title>([^<]*?)(?:\s*\|[^<]*)?<\/title>/) || [])[1] || 'Samui Luxury Stays';
       html = html.replace('<div class="a-back">', `<div class="wrap" style="max-width:720px;margin:0 auto 10px">${buildShareBlock(pageUrl, t.replace(/&amp;/g, '&'), 'Share this article')}</div>\n\n<div class="a-back">`);
+    }
+    // Site-wide contact details: the footer on every page used to have the email address
+    // typed in directly, so editing "Contact Info" in /admin never reached it. Swap in
+    // the saved email everywhere, and add the saved phone number to the footer too.
+    if (settings && settings.email && String(settings.email).trim()) {
+      html = html.split('owners@samuiluxurystays.com').join('{{CMS:email}}');
+    }
+    if (settings && settings.phone_display && String(settings.phone_display).trim() && !html.includes('foot-phone')) {
+      const telDigits = telHref(settings.phone_href || settings.phone_display);
+      if (telDigits) {
+        html = html.replace(/(<a href="mailto:\{\{CMS:email\}\}">\{\{CMS:email\}\}<\/a>)(<\/div>)/,
+          `$1<a class="foot-phone" href="tel:${telDigits}">{{CMS:phone_display}}</a>$2`);
+      }
     }
     const updated = injectTokens(html, settings);
     if (updated !== html) fs.writeFileSync(filePath, updated);
