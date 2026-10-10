@@ -1,14 +1,16 @@
 {
-  "sale_currency": "USD",
+  "sale_currency": "THB",
   "name": "Villa Tosti",
   "area": "Bantai",
-  "featured": false,
-  "order": 99,
+  "featured": true,
+  "order": 2,
   "style": "Seaview ",
+  "sale_price": 50000000,
   "gallery": "/assets/img/villas/210923-villa-tosti-0032.jpg",
   "status": "Available",
   "listing_type": [
-    "Rental"
+    "Rental",
+    "For Sale"
   ],
   "feature": "Infinity Pool, Seaview, Private Chef",
   "amenities": [
