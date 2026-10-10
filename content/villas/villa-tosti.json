@@ -6,12 +6,16 @@
   "order": 2,
   "style": "Seaview ",
   "sale_price": 50000000,
-  "gallery": "/assets/img/villas/210923-villa-tosti-0032.jpg",
+  "gallery": "/assets/img/villas/210923-villa-tosti-0002.jpg",
   "status": "Available",
   "listing_type": [
     "Rental",
     "For Sale"
   ],
+  "location": {
+    "lat": 9.34243,
+    "lng": 99.56562
+  },
   "feature": "Infinity Pool, Seaview, Private Chef",
   "amenities": [
     "Sea View",
