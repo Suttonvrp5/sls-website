@@ -1,0 +1,24 @@
+{
+  "sale_currency": "USD",
+  "name": "Villa Tosti",
+  "area": "Bantai",
+  "featured": false,
+  "order": 99,
+  "style": "Seaview ",
+  "gallery": "/assets/img/villas/210923-villa-tosti-0032.jpg",
+  "status": "Available",
+  "listing_type": [
+    "Rental"
+  ],
+  "feature": "Infinity Pool, Seaview, Private Chef",
+  "amenities": [
+    "Sea View",
+    "Pets Allowed",
+    "Private Chef",
+    "Air Conditioning",
+    "WiFi",
+    "Parking"
+  ],
+  "bedrooms": 3,
+  "image": "/assets/img/villas/170424-villa-tosti-1198.jpg"
+}
