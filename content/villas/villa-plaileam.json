@@ -3,7 +3,7 @@
   "sale_currency": "THB",
   "name": "Villa Plaileam ",
   "area": "Plaileam",
-  "featured": false,
+  "featured": true,
   "order": 99,
   "style": "Central Location. Easy Access. Private Pool",
   "sale_price": 11400000,
