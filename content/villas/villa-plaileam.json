@@ -12,6 +12,10 @@
   "listing_type": [
     "For Sale"
   ],
+  "location": {
+    "lat": 9.579215,
+    "lng": 100.072605
+  },
   "feature": "Pool, Private, Central Location",
   "amenities": [
     "Parking",
