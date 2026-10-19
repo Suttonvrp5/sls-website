@@ -29,6 +29,29 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Service","name":"Relocation Property Search","provider":{"@type":"LocalBusiness","name":"Samui Luxury Stays"},"areaServed":{"@type":"Place","name":"Koh Samui, Thailand"},"description":"On-the-ground property scouting and shortlisting service for prospective renters relocating to Koh Samui, for a fixed fee.","offers":[{"@type":"Offer","name":"Scout"},{"@type":"Offer","name":"Shortlist"},{"@type":"Offer","name":"Full Relocation"}]}
 </script>
+<style>
+.rl-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.rl-card{background:#fff;border:1px solid var(--hairline);padding:34px 30px}
+.rl-card h4{font-size:1.08rem;font-weight:500;color:var(--navy);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--gold)}
+.rl-card ul{list-style:none}
+.rl-card li{position:relative;padding-left:20px;margin-bottom:10px;font-size:.9rem;color:var(--muted);font-weight:300}
+.rl-card li::before{content:"";position:absolute;left:2px;top:.62em;width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+.scam{background:var(--navy-deep);color:#fff}
+.scam .head-row h2{color:#fff}.scam .head-row .lead{color:rgba(255,255,255,.62)}
+.scam .rl-card{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
+.scam .rl-card h4{color:#fff}.scam .rl-card li{color:rgba(255,255,255,.62)}
+.rl-terms{margin-top:34px;padding:24px 30px;background:var(--grey);border-left:3px solid var(--gold)}
+.rl-terms h5{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--navy);margin-bottom:10px}
+.rl-terms p{font-size:.92rem;color:var(--ink);font-weight:300;margin-bottom:8px}.rl-terms p:last-child{margin-bottom:0}.rl-terms b{font-weight:600}
+.area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.area{background:#fff;border:1px solid var(--hairline);padding:26px 26px 24px}
+.area .loc{font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.area h4{font-size:1.12rem;font-weight:500;color:var(--navy);margin:8px 0 8px}
+.area p{font-size:.88rem;color:var(--muted);font-weight:300}
+.rl-note{margin-top:26px;font-size:.82rem;color:var(--muted);font-style:italic}
+@media(max-width:900px){.rl-grid3,.area-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.rl-grid3,.area-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 
@@ -65,6 +88,18 @@
   </div>
 </section>
 
+<!-- SCAMS -->
+<section class="scam pad-sm" id="stay-safe">
+  <div class="wrap">
+    <div class="head-row reveal"><span class="eyebrow">Stay Safe</span><h2>Rental scams are <em>common on Samui.</em></h2><p class="lead">Fake owners and fake agents are a well-known problem on Koh Samui, and many newcomers have lost deposits to them. Searching from overseas makes you an easy target. Working with Samui Luxury Stays keeps you protected.</p></div>
+    <div class="rl-grid3">
+      <div class="rl-card reveal"><h4>Warning signs</h4><ul><li>Pressure to pay a deposit before you have seen the villa</li><li>An owner who is always &lsquo;abroad&rsquo; and cannot meet</li><li>Prices far below the market, or photos that do not match</li><li>Payment requested to a personal account or by crypto</li></ul></div>
+      <div class="rl-card reveal"><h4>How we protect you</h4><ul><li>We visit and inspect every property in person</li><li>We check the landlord&rsquo;s identity and right to let</li><li>We review the lease and deposit terms before you pay</li><li>We never ask you to pay before a lease is agreed</li></ul></div>
+      <div class="rl-card reveal"><h4>Safe payment rules</h4><ul><li>Never pay for a place you have not seen</li><li>Pay only against a signed lease and a written receipt</li><li>Confirm the account name matches the owner or company</li><li>If in doubt, ask us before you send money</li></ul></div>
+    </div>
+  </div>
+</section>
+
 <!-- HOW IT WORKS -->
 <section class="pad-sm">
   <div class="wrap">
@@ -88,6 +123,25 @@
 <!-- PRICING_TIERS:END -->
     </div>
     <p class="form-note" style="margin-top:30px"><!--CMS:pricing_note-->Fees cover our time and local expertise, not the properties themselves — you deal directly with landlords for rent and deposits. Prices shown in Thai Baht; happy to quote in your home currency on request.<!--/CMS:pricing_note--></p>
+    <div class="rl-terms reveal"><h5>Important terms</h5><p><b>Fees are non-refundable.</b> Package fees cover our time and local expertise, not the properties themselves.</p><p><b>Availability is not guaranteed.</b> Villas can be rented to others between our search and your arrival. A property is only secured once a holding deposit has been paid to the landlord.</p></div>
+  </div>
+</section>
+
+<!-- AREAS -->
+<section class="why pad" id="areas">
+  <div class="wrap">
+    <div class="head-row center reveal"><span class="eyebrow center">The Island</span><h2>Where to live on <em>Koh Samui.</em></h2><p class="lead" style="max-width:62ch;margin:18px auto 0">Koh Samui is a small island with very different neighbourhoods, from lively beach towns to quiet hillside villages. Where you live shapes your daily life, your commute and your rent.</p></div>
+    <div class="area-grid"><div class="area reveal"><span class="loc">North coast</span><h4>Bophut &amp; Fisherman&rsquo;s Village</h4><p>Lively walking street, restaurants, boutiques and a large expat community; handy for the airport.</p></div><div class="area reveal"><span class="loc">North-east</span><h4>Bang Rak</h4><p>Home of the Big Buddha; close to the airport with shops, cafes and a calm, local feel.</p></div><div class="area reveal"><span class="loc">North-east</span><h4>Plai Laem</h4><p>Between Bang Rak and Choeng Mon, near the Guanyin temple and lake; central, well-served and popular with long-stay residents.</p></div><div class="area reveal"><span class="loc">North-east</span><h4>Choeng Mon</h4><p>Calm, upmarket bay with soft sand, cafes and luxury villas; a quiet base close to the airport.</p></div><div class="area reveal"><span class="loc">East coast</span><h4>Chaweng Noi</h4><p>A smaller, quieter bay just north of Chaweng, with hillside villas and sea views, minutes from the action.</p></div><div class="area reveal"><span class="loc">East coast</span><h4>Chaweng</h4><p>The island&rsquo;s busiest beach: the most shops, restaurants, nightlife and services.</p></div><div class="area reveal"><span class="loc">South-east</span><h4>Lamai</h4><p>A wide beach and a lively town centre; a mix of budget homes and luxury villas.</p></div><div class="area reveal"><span class="loc">North coast</span><h4>Maenam</h4><p>Long, quieter beach with an evening market, a relaxed pace and good value; popular with families.</p></div><div class="area reveal"><span class="loc">North coast</span><h4>Ban Tai</h4><p>Quiet residential area close to Maenam and Bophut, popular with long-term residents.</p></div><div class="area reveal"><span class="loc">West coast</span><h4>Nathon</h4><p>The island&rsquo;s main town and ferry port, with the hospital, government offices and low prices; not a beach resort.</p></div><div class="area reveal"><span class="loc">West coast</span><h4>Lipa Noi</h4><p>Peaceful, green and local, with calm water, sunsets and a mix of villas and affordable homes.</p></div><div class="area reveal"><span class="loc">South-west</span><h4>Taling Ngam</h4><p>Remote and tranquil hillside villas with sunset views; away from the airport and nightlife.</p></div><div class="area reveal"><span class="loc">South coast</span><h4>Na Muang</h4><p>Inland-feeling south of the island near the waterfalls; green, quiet and good value.</p></div></div>
+    <p class="rl-note reveal">Tell us your priorities, such as school or work commute, beach access, nightlife or quiet, budget and whether you will drive, and we will match you to the right neighbourhoods. Area notes are a general guide only and conditions change.</p>
+  </div>
+</section>
+
+<!-- WHAT TO KNOW -->
+<section class="pad" id="know">
+  <div class="wrap">
+    <div class="head-row center reveal"><span class="eyebrow center">Before You Rent</span><h2>What to know <em>before you move.</em></h2></div>
+    <div class="rl-grid3"><div class="rl-card reveal"><h4>Leases &amp; deposits</h4><ul><li>Typical leases run 6 to 12 months; short-term and monthly rentals cost more</li><li>A refundable security deposit and one month in advance are common</li><li>Always sign a written lease and keep copies</li><li>Agree who pays for repairs, pool and garden care in writing</li></ul></div><div class="rl-card reveal"><h4>Utilities &amp; running costs</h4><ul><li>Ask if electricity and water are billed at utility rates or marked up</li><li>Internet: confirm fibre availability at the address</li><li>Air-conditioning is the largest electricity cost</li><li>Check the water source and pressure</li></ul></div><div class="rl-card reveal"><h4>Immigration &amp; paperwork</h4><ul><li>Your landlord must report foreign tenants to Thai immigration (TM30)</li><li>Keep copies of your passport, visa and lease</li><li>Visa and work-permit questions are best put to a licensed immigration adviser</li></ul></div><div class="rl-card reveal"><h4>Getting around</h4><ul><li>Most areas are not walkable: plan for a car or scooter</li><li>An International Driving Permit is needed to drive legally</li><li>Taxis and ride-hailing exist but are costly; ask us for trusted drivers</li></ul></div><div class="rl-card reveal"><h4>Seasons &amp; weather</h4><ul><li>Hot and dry from roughly February to August</li><li>Samui&rsquo;s rainy season is typically October to December</li><li>Check roof, drainage and pool-area condition before you sign</li></ul></div><div class="rl-card reveal"><h4>Healthcare &amp; daily life</h4><ul><li>Private hospitals on the island offer English-speaking care</li><li>Supermarkets, international schools and gyms cluster in the north and east</li><li>Health insurance is strongly recommended</li></ul></div></div>
+    <p class="rl-note reveal">This guide is general information only and is not legal or immigration advice. Rules, costs and seasons can change; please confirm current requirements before you travel.</p>
   </div>
 </section>
 
@@ -99,6 +153,11 @@
       <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg></span><div><h4>Real internet speed &amp; power reliability</h4><p>Tested on-site, not taken from a listing.</p></div></li>
       <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg></span><div><h4>Road access &amp; commute in monsoon season</h4><p>A view that floods you in is no view at all.</p></div></li>
       <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg></span><div><h4>Landlord legitimacy &amp; lease terms</h4><p>Ownership, deposit terms and red flags, checked before you sign anything.</p></div></li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg></span><div><h4>Air-conditioning, plumbing, hot water &amp; electrics</h4><p>Tested, not assumed.</p></div></li>
+      <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg></span><div><h4>Damp, mould &amp; roof leaks</h4><p>Especially after heavy rain.</p></div></li>
+      <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg></span><div><h4>Pool &amp; garden condition</h4><p>And who maintains them.</p></div></li>
+      <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg></span><div><h4>Noise, neighbours &amp; flood risk</h4><p>Road access, drainage and safe parking.</p></div></li>
+      <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg></span><div><h4>Inventory &amp; lease terms</h4><p>Furniture and appliances listed, plus deposit return, notice, renewal and rent-increase terms.</p></div></li>
     </ul>
   </div>
 </section>
@@ -166,7 +225,9 @@
       <div class="faq-item"><button class="faq-q">Can you search for long-term rentals, not just holiday villas? <span class="pm"></span></button><div class="faq-a"><p>Yes — this service is built specifically for long-term relocation, from condos and townhouses to full villas, whatever your budget and needs call for.</p></div></div>
       <div class="faq-item"><button class="faq-q">How long does the process usually take? <span class="pm"></span></button><div class="faq-a"><p>Scout shortlists typically arrive within 5 working days. Shortlist and Full Relocation packages usually take 1–3 weeks, depending on how specific your brief is and property availability.</p></div></div>
       <div class="faq-item"><button class="faq-q">I'm already on Samui — can you still help? <span class="pm"></span></button><div class="faq-a"><p>Absolutely. This service works just as well if you're here and simply don't have time to search — the same packages and fees apply.</p></div></div>
-    </div>
+          <div class="faq-item"><button class="faq-q">What if the villa is rented to someone else before I arrive? <span class="pm"></span></button><div class="faq-a"><p>It can happen: properties can be let to others between our search and your arrival. A villa is only secured once a holding deposit has been paid to the landlord, so if you find a place you love, tell us and we will help you secure it quickly.</p></div></div>
+      <div class="faq-item"><button class="faq-q">How do I know a listing or landlord is genuine? <span class="pm"></span></button><div class="faq-a"><p>Fake owners and agents are common on Samui. We visit every property in person and check the landlord&rsquo;s identity and right to let before you pay anything. As a rule, never pay for a place you have not seen, and only pay against a signed lease and a written receipt.</p></div></div>
+</div>
   </div>
 </section>
 
