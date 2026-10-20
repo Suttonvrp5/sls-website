@@ -118,22 +118,65 @@
   var yr=document.getElementById('year');
   if(yr){yr.textContent=new Date().getFullYear();}
 
-  /* Villa listing tabs: filter by Rental / For Sale / All */
+  /* Property listing filters: Rental / For Sale tabs + area + bedrooms */
   var vtabs=document.getElementById('vtabs');
   var grid=document.getElementById('portfolioGrid');
   if(vtabs&&grid){
     var cards=grid.querySelectorAll('.vcard');
+    var fArea=document.getElementById('fArea');
+    var fBeds=document.getElementById('fBeds');
+    var fType=document.getElementById('fType');
+    var fPrice=document.getElementById('fPrice');
+    var emptyMsg=document.getElementById('noMatch');
+    var cur='all';
+    if(fArea){
+      var seen={};
+      cards.forEach(function(c){var a=c.getAttribute('data-area');if(a&&!seen[a]){seen[a]=1;var o=document.createElement('option');o.value=a;o.textContent=a;fArea.appendChild(o);}});
+    }
+    if(fType){
+      var seenT={};
+      cards.forEach(function(c){var t=c.getAttribute('data-ptype');if(t&&!seenT[t]){seenT[t]=1;var o=document.createElement('option');o.value=t;o.textContent=t;fType.appendChild(o);}});
+    }
+    var BANDS={
+      rental:[['','Any price'],['0-30000','Under \u0e3f30,000 / month'],['30000-60000','\u0e3f30,000 \u2013 60,000'],['60000-100000','\u0e3f60,000 \u2013 100,000'],['100000-99999999','\u0e3f100,000+']],
+      sale:[['','Any price'],['0-10000000','Under \u0e3f10M'],['10000000-25000000','\u0e3f10M \u2013 25M'],['25000000-50000000','\u0e3f25M \u2013 50M'],['50000000-999999999999','\u0e3f50M+']]
+    };
+    function setBands(){
+      if(!fPrice)return;
+      var b=BANDS[cur];fPrice.innerHTML='';
+      if(!b){fPrice.disabled=true;fPrice.innerHTML='<option value="">Choose Rentals or For Sale</option>';return;}
+      fPrice.disabled=false;
+      b.forEach(function(x){var o=document.createElement('option');o.value=x[0];o.textContent=x[1];fPrice.appendChild(o);});
+    }
+    function apply(){
+      var n=0;
+      cards.forEach(function(card){
+        var types=(card.getAttribute('data-type')||'').split(' ');
+        var show=(cur==='all'||types.indexOf(cur)!==-1);
+        if(show&&fArea&&fArea.value&&card.getAttribute('data-area')!==fArea.value)show=false;
+        if(show&&fBeds&&fBeds.value&&parseInt(card.getAttribute('data-beds')||'0',10)<parseInt(fBeds.value,10))show=false;
+        if(show&&fType&&fType.value&&card.getAttribute('data-ptype')!==fType.value)show=false;
+        if(show&&fPrice&&fPrice.value&&BANDS[cur]){
+          var pr=fPrice.value.split('-');
+          var val=parseInt(card.getAttribute(cur==='sale'?'data-sale':'data-rent')||'0',10);
+          if(!val||val<parseInt(pr[0],10)||val>parseInt(pr[1],10))show=false;
+        }
+        card.hidden=!show;if(show)n++;
+      });
+      if(emptyMsg)emptyMsg.style.display=n?'none':'block';
+    }
     vtabs.querySelectorAll('.vtab').forEach(function(tab){
       tab.addEventListener('click',function(){
         vtabs.querySelectorAll('.vtab').forEach(function(t){t.classList.remove('active');});
         tab.classList.add('active');
-        var filter=tab.getAttribute('data-filter');
-        cards.forEach(function(card){
-          var types=(card.getAttribute('data-type')||'').split(' ');
-          var show=filter==='all'||types.indexOf(filter)!==-1;
-          card.hidden=!show;
-        });
+        cur=tab.getAttribute('data-filter');
+        setBands();
+        apply();
       });
     });
+    if(fArea)fArea.addEventListener('change',apply);
+    if(fBeds)fBeds.addEventListener('change',apply);
+    if(fType)fType.addEventListener('change',apply);
+    if(fPrice)fPrice.addEventListener('change',apply);
   }
 })();
