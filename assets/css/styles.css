@@ -427,3 +427,13 @@ footer{background:var(--navy-deep);color:#fff;padding:90px 0 36px}
 .vvideo{position:relative;width:100%;aspect-ratio:16/9;margin-top:28px;border-radius:8px;overflow:hidden;background:#0b2742}
 .vvideo iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .vvideo video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+
+.pfilters{display:flex;gap:18px;flex-wrap:wrap;margin:0 0 28px}
+.pfilters label{color:rgba(255,255,255,.75);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;display:flex;flex-direction:column;gap:6px}
+.pfilters select{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:4px;padding:10px 14px;font:inherit;min-width:170px}
+.pfilters select option{color:#0B1F3A}
+
+.vcard .vprice{color:#fff;font-weight:600;font-size:1.05rem;margin-top:8px}
+.vcard .vprice small{font-weight:300;font-size:.78rem;opacity:.7;margin-left:6px}
+.vcard .vchip{position:absolute;top:16px;right:16px;z-index:3;background:var(--gold);color:var(--navy);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:3px}
+.pfilters select:disabled{opacity:.4}
