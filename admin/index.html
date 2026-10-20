@@ -22,6 +22,18 @@
     });
   }
 </script>
+<script>
+  /* Let the Media library "Upload" file picker accept several photos at once. */
+  try {
+    var fixPickers = function () {
+      document.querySelectorAll('input[type="file"]').forEach(function (el) {
+        if (!el.multiple && !el.hasAttribute('data-single')) { el.multiple = true; }
+      });
+    };
+    new MutationObserver(fixPickers).observe(document.documentElement, { childList: true, subtree: true });
+    fixPickers();
+  } catch (e) {}
+</script>
 <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
