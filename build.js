@@ -254,12 +254,12 @@ function buildShareBlock(pageUrl, shareText, label) {
 
 function villaDetailPage(v, slug, allVillas) {
   const coverSrc = resolveImg((v.image_url && v.image_url.trim()) ? v.image_url.trim() : (v.image || ''));
-  const galleryImgs = Array.isArray(v.gallery)
-    ? v.gallery.map(g => {
-        if (typeof g === 'string') return resolveImg(g) || null; // older/alternate CMS format: plain string
-        return (g && typeof g.image === 'string') ? resolveImg(g.image) || null : null;
-      }).filter(Boolean)
-    : [];
+  const toGalleryList = (x) => Array.isArray(x) ? x : (typeof x === 'string' && x.trim() ? [x] : []);
+  const galleryImgs = [...toGalleryList(v.gallery), ...toGalleryList(v.gallery_photos)]
+    .map(g => {
+      if (typeof g === 'string') return resolveImg(g) || null; // older/alternate CMS format: plain string
+      return (g && typeof g.image === 'string') ? resolveImg(g.image) || null : null;
+    }).filter(Boolean);
   const allImages = [...new Set([coverSrc, ...galleryImgs].filter(Boolean))];
   const amenities = Array.isArray(v.amenities) ? v.amenities : [];
   const chips = amenities.length
