@@ -1,5 +1,7 @@
 {
   "ownership_structure": "Chanote Freehold or Leasehold",
+  "property_type": "Villa",
+  "bathrooms": 3,
   "sale_currency": "THB",
   "name": "Villa Plaileam ",
   "area": "Plaileam",
@@ -10,6 +12,7 @@
     }
   ],
   "order": 99,
+  "size_sqm": 400,
   "style": "Central Location. Easy Access. Private Pool",
   "sale_price": 11400000,
   "gallery": "/assets/img/villas/photo-2026-10-15-09-51-50-2-.jpg",
