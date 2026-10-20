@@ -49,13 +49,13 @@ collections:
         hint: "Tick everything that applies — only the first 3 checked will show as tags on the villa card, so put the most important ones first. To add a new amenity option to this list, ask your developer to add one line to admin/config.yml."
       - { label: "Photo", name: "image", widget: "image", hint: "Main cover photo — shown on the villa card and as the first slide." }
       - { label: "Or paste an image URL instead", name: "image_url", widget: "string", required: false, hint: "Only used if no photo is uploaded above." }
-      - label: "Gallery"
-        name: "gallery"
+      - label: "Gallery Photos"
+        name: "gallery_photos"
         widget: "list"
         required: false
         add_to_top: false
         label_singular: "Photo"
-        hint: "More photos for the picture slider on the villa's own page. Click 'Add Photo', then 'Choose an image' to upload a photo or pick one already uploaded. Repeat for each photo. You can drag the entries to change their order. The cover photo above is always shown first."
+        hint: "More photos for the picture slider on the villa's own page. Click 'Add Photo', then 'Choose an image' to upload a photo or pick one already uploaded. Repeat for each photo. You can drag the entries to change their order. Photos added before are still shown on the site automatically, and the cover photo above is always shown first."
         fields:
           - { label: "Photo", name: "image", widget: "image" }
       - label: "Floor Plans"
