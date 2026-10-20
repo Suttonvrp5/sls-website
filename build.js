@@ -151,8 +151,8 @@ function villaCard(v, opts) {
   const saleTHB = (forSale && typeof v.sale_price === 'number') ? Math.round(v.sale_price * (THB[v.sale_currency] || 35)) : 0;
   const rentTHB = (forRent && typeof v.rent_price === 'number') ? v.rent_price : 0;
   const priceLines = [];
-  if (forSale) priceLines.push(`<div class="vprice">${formatPrice(v.sale_price, v.sale_currency) || 'Price on request'}<small>for sale</small></div>`);
-  if (forRent && rentTHB) priceLines.push(`<div class="vprice">${formatPrice(rentTHB, 'THB')}<small>/ month</small></div>`);
+  if (forSale) priceLines.push(`<div class="vprice"><span class="plabel">Sale Price:</span> <span class="pval">${formatPrice(v.sale_price, v.sale_currency) || 'On request'}</span></div>`);
+  if (forRent) priceLines.push(`<div class="vprice"><span class="plabel">Rental Price:</span> <span class="pval">${rentTHB ? formatPrice(rentTHB, 'THB') + ' / month' : 'On request'}</span></div>`);
   const ptype = (v.property_type && String(v.property_type).trim()) || 'Villa';
   const tagChip = v.tag && String(v.tag).trim() ? `<div class="vchip">${esc(v.tag)}</div>` : '';
   return `<a href="${href}" class="${cls.join(' ')}" data-type="${dataType}" data-area="${esc(String(v.area||'').trim())}" data-beds="${esc(String(v.bedrooms||''))}" data-ptype="${esc(ptype)}" data-sale="${saleTHB}" data-rent="${rentTHB}"><div class="vimg" style="background-image:url('${esc(imageSrc)}')"></div><div class="vgrad"></div>${statusRibbon(v)}${tagChip}<div class="vbody"><span class="vtag">${esc(ptype)} · ${esc(v.area)}${v.style ? ' · ' + esc(v.style) : ''}</span><h3>${esc(v.name)}</h3><div class="vmeta">${metaBits.join('')}</div>${priceLines.join('')}${pills}</div></a>`;
@@ -273,6 +273,21 @@ function villaDetailPage(v, slug, allVillas) {
   const amenities = Array.isArray(v.amenities) ? v.amenities : [];
   const chips = amenities.length
     ? `<div class="chip-row">${amenities.map(a => `<span class="chip">${esc(a)}</span>`).join('')}</div>`
+    : '';
+  const ptypeD = (v.property_type && String(v.property_type).trim()) || 'Villa';
+  const factItems = [];
+  factItems.push(['Type', ptypeD]);
+  if (v.bedrooms) factItems.push(['Bedrooms', v.bedrooms]);
+  if (v.bathrooms) factItems.push(['Bathrooms', v.bathrooms]);
+  if (v.size_sqm) factItems.push(['Size', v.size_sqm + ' sqm']);
+  if (v.style) factItems.push(['Setting', v.style]);
+  if (v.area) factItems.push(['Area', v.area]);
+  if (v.ownership_structure && listingTypes(v).includes('For Sale')) factItems.push(['Ownership', v.ownership_structure]);
+  if (listingTypes(v).includes('For Sale')) factItems.push(['Sale Price', formatPrice(v.sale_price, v.sale_currency) || 'On request']);
+  if (listingTypes(v).includes('Rental')) factItems.push(['Rental Price', typeof v.rent_price === 'number' ? formatPrice(v.rent_price, 'THB') + ' / month' : 'On request']);
+  const factsBlock = `<div class="vfacts">${factItems.map(f => `<div class="vfact"><span>${esc(f[0])}</span><b>${esc(f[1])}</b></div>`).join('')}</div>`;
+  const amenGrid = amenities.length
+    ? `<h3 class="vsub">Features &amp; amenities</h3><ul class="vamen">${amenities.map(a => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg>${esc(a)}</li>`).join('')}</ul>`
     : '';
   const paras = String(v.description || '')
     .split(/\n+/).filter(Boolean)
@@ -415,7 +430,8 @@ ${SITE_HEADER}
       <div class="chip-row" style="margin-bottom:16px">${typeBadges}</div>
       <h2>${esc(v.feature)}</h2>
       <div class="vdesc">${paras || '<p>More detail on this villa is coming soon — enquire below and our team will send you the full listing.</p>'}</div>
-      ${chips}
+      ${factsBlock}
+      ${amenGrid}
       ${isForSale ? `<div class="a-callout" style="margin-top:30px"><b>${priceStr ? priceStr : 'Price on request'}</b><p>${v.ownership_structure ? `Ownership structure: ${esc(v.ownership_structure)}.` : ''} Contact us for full details, viewings and next steps.</p></div>` : ''}
       <div style="margin-top:40px">
         <span class="eyebrow">Location</span>
@@ -435,7 +451,7 @@ ${SITE_HEADER}
 ${floorplansSection}
 
 <section class="cta-band">
-  <div class="wrap reveal"><span class="eyebrow center">Explore More</span><h2>See more of our <em>villa collection.</em></h2><p>${esc(v.name)} is one of several distinguished homes we manage across Koh Samui.</p><a href="../villas.html" class="btn btn-gold">View All Villas <span class="arr">→</span></a></div>
+  <div class="wrap reveal"><span class="eyebrow center">Explore More</span><h2>See more of our <em>villa collection.</em></h2><p>${esc(v.name)} is one of several distinguished homes we manage across Koh Samui.</p><a href="../villas.html" class="btn btn-gold">View All Properties <span class="arr">→</span></a></div>
 </section>
 
 ${SITE_FOOTER}
