@@ -3,6 +3,17 @@
   "name": "Villa Tosti",
   "area": "Bantai",
   "featured": true,
+  "gallery_photos": [
+    {
+      "image": "/assets/img/villas/210923-villa-tosti-0032.jpg"
+    },
+    {
+      "image": "/assets/img/villas/210923-villa-tosti-0029.jpg"
+    },
+    {
+      "image": "/assets/img/villas/210923-villa-tosti-0024.jpg"
+    }
+  ],
   "order": 2,
   "style": "Seaview ",
   "sale_price": 50000000,
