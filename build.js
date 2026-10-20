@@ -137,16 +137,25 @@ function villaCard(v, opts) {
   const dataType = types.map(t => t === 'For Sale' ? 'sale' : 'rental').join(' ');
   types.forEach(t => cls.push(t === 'For Sale' ? 'vc-sale' : 'vc-rental'));
   const imageSrc = resolveImg((v.image_url && v.image_url.trim()) ? v.image_url.trim() : (v.image || ''));
-  const metaBits = [`<span>${esc(v.bedrooms)} Bedrooms</span>`, `<span>${esc(v.feature)}</span>`];
+  const metaBits = [`<span>${esc(v.bedrooms)} Bed</span>`];
+  if (v.bathrooms) metaBits.push(`<span>${esc(v.bathrooms)} Bath</span>`);
+  if (v.size_sqm) metaBits.push(`<span>${esc(v.size_sqm)} sqm</span>`);
+  if (v.feature) metaBits.push(`<span>${esc(v.feature)}</span>`);
   const amenities = Array.isArray(v.amenities) ? v.amenities.slice(0, 3) : [];
   const pills = amenities.length
     ? `<div class="vpills">${amenities.map(a => `<span>${esc(a)}</span>`).join('')}</div>`
     : '';
   const forSale = types.includes('For Sale');
-  const saleBadge = forSale
-    ? `<div class="vsale-badge">${formatPrice(v.sale_price, v.sale_currency) || 'For Sale'}</div>`
-    : '';
-  return `<a href="${href}" class="${cls.join(' ')}" data-type="${dataType}"><div class="vimg" style="background-image:url('${esc(imageSrc)}')"></div><div class="vgrad"></div>${statusRibbon(v)}${saleBadge}<div class="vbody"><span class="vtag">${esc(v.area)} · ${esc(v.style)}</span><h3>${esc(v.name)}</h3><div class="vmeta">${metaBits.join('')}</div>${pills}</div></a>`;
+  const forRent = types.includes('Rental');
+  const THB = { THB: 1, USD: 35, EUR: 38, GBP: 44 };
+  const saleTHB = (forSale && typeof v.sale_price === 'number') ? Math.round(v.sale_price * (THB[v.sale_currency] || 35)) : 0;
+  const rentTHB = (forRent && typeof v.rent_price === 'number') ? v.rent_price : 0;
+  const priceLines = [];
+  if (forSale) priceLines.push(`<div class="vprice">${formatPrice(v.sale_price, v.sale_currency) || 'Price on request'}<small>for sale</small></div>`);
+  if (forRent && rentTHB) priceLines.push(`<div class="vprice">${formatPrice(rentTHB, 'THB')}<small>/ month</small></div>`);
+  const ptype = (v.property_type && String(v.property_type).trim()) || 'Villa';
+  const tagChip = v.tag && String(v.tag).trim() ? `<div class="vchip">${esc(v.tag)}</div>` : '';
+  return `<a href="${href}" class="${cls.join(' ')}" data-type="${dataType}" data-area="${esc(String(v.area||'').trim())}" data-beds="${esc(String(v.bedrooms||''))}" data-ptype="${esc(ptype)}" data-sale="${saleTHB}" data-rent="${rentTHB}"><div class="vimg" style="background-image:url('${esc(imageSrc)}')"></div><div class="vgrad"></div>${statusRibbon(v)}${tagChip}<div class="vbody"><span class="vtag">${esc(ptype)} · ${esc(v.area)}${v.style ? ' · ' + esc(v.style) : ''}</span><h3>${esc(v.name)}</h3><div class="vmeta">${metaBits.join('')}</div>${priceLines.join('')}${pills}</div></a>`;
 }
 
 // ---------- villa detail page ----------
@@ -721,6 +730,9 @@ function build() {
     if (settings && settings.email && String(settings.email).trim()) {
       html = html.split('owners@samuiluxurystays.com').join('{{CMS:email}}');
     }
+    // Nav + footer label: "Villas" is now "Properties" (address stays villas.html so Google rankings are kept)
+    html = html.replace(/(<a href="(?:\.\.\/)?villas\.html"(?: class="active")?>)Villas<\/a>/g, '$1Properties</a>');
+    html = html.replace(/(<a href="(?:\.\.\/)?villas\.html">)Featured Villas<\/a>/g, '$1Properties</a>');
     // LinkedIn icon removed from footer
     html = html.replace(/\s*<a href="\{\{CMS:linkedin_url\}\}"[^>]*aria-label="LinkedIn">[\s\S]*?<\/a>/g, '');
     // Legal company line in footer (from Site Settings)
