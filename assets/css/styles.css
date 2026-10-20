@@ -471,3 +471,33 @@ footer{background:var(--navy-deep);color:#fff;padding:90px 0 36px}
 .portfolio .vcard .vprice{margin-top:12px;color:#E3C487}
 .portfolio .vcard .vpills{margin-top:14px}
 .portfolio .vcard .vpills span{background:rgba(255,255,255,.08);border-color:rgba(227,196,135,.55)}
+
+.vcard .vprice small:first-child{display:inline;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;opacity:.85;margin:0 8px 0 0}
+.vcard .vprice{display:block}
+
+.vcard .vprice{display:block;font-size:1.15rem;margin-top:10px}
+.vcard .vprice .plabel{font-weight:800;color:#fff;font-size:1.05rem;letter-spacing:.02em}
+.vcard .vprice .pval{font-weight:800;color:#E3C487;font-size:1.2rem}
+
+/* All property cards: photo on top, solid info panel below (text never sits on the photo) */
+.vcard{display:flex;flex-direction:column;min-height:0;background:#0d2440;border:1px solid rgba(255,255,255,.1);border-radius:8px}
+.vcard .vimg{position:relative;inset:auto;height:250px;flex:none;transform:none;background-size:cover;background-position:center}
+.vcard:hover .vimg{transform:none;filter:brightness(1.06)}
+.vcard .vgrad{display:none}
+.vcard .vbody{position:static;padding:22px 24px 24px;background:#0d2440;flex:1}
+.vcard .vtag{color:#E3C487;font-size:.78rem;text-shadow:none}
+.vcard h3{text-shadow:none;font-size:1.55rem;margin:8px 0 10px}
+.vcard .vmeta{text-shadow:none;margin-bottom:4px}
+.vcard .vprice{margin-top:12px;color:#E3C487}
+.vcard .vpills{margin-top:14px}
+.vcard .vpills span{background:rgba(255,255,255,.08);border-color:rgba(227,196,135,.55)}
+
+.vcard .vprice small:first-child{display:inline;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;opacity:.85;margin:0 8px 0 0}
+.vcard .vprice{display:block}
+
+
+.vcard.tall{min-height:0}
+.vcard.tall .vimg{flex:1;height:auto;min-height:330px}
+.portfolio .vcard{min-height:0}
+.vcard .vbody{flex:none}
+.vcard.tall .vimg{flex:1 1 auto}
