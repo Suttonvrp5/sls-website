@@ -32,6 +32,16 @@
     };
     new MutationObserver(fixPickers).observe(document.documentElement, { childList: true, subtree: true });
     fixPickers();
+    /* Also switch on multi-select right before a picker opens (some pickers are created on the fly). */
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      if (t && t.tagName === 'INPUT' && t.type === 'file' && !t.hasAttribute('data-single')) { t.multiple = true; }
+    }, true);
+    var origClick = HTMLInputElement.prototype.click;
+    HTMLInputElement.prototype.click = function () {
+      try { if (this.type === 'file' && !this.hasAttribute('data-single')) { this.multiple = true; } } catch (e2) {}
+      return origClick.apply(this, arguments);
+    };
   } catch (e) {}
 </script>
 <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
