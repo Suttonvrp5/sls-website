@@ -357,10 +357,16 @@ footer{background:var(--navy-deep);color:#fff;padding:90px 0 36px}
 .foot-col a:hover{color:#fff;padding-left:5px}
 .foot-bot{display:flex;justify-content:space-between;align-items:center;padding-top:30px;flex-wrap:wrap;gap:16px}
 .foot-bot p{color:rgba(255,255,255,.4);font-size:.82rem;font-weight:300}
-.foot-social{display:flex;gap:14px}
-.foot-social a{width:38px;height:38px;border:1px solid rgba(255,255,255,.16);border-radius:50%;display:grid;place-items:center;color:rgba(255,255,255,.7);transition:.35s}
-.foot-social a:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
-.foot-social svg{width:16px;height:16px}
+.foot-social{display:flex;gap:16px;align-items:center}
+.foot-social a{width:48px;height:48px;border:0;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--gold);box-shadow:0 6px 18px rgba(0,0,0,.28);transition:transform .35s,box-shadow .35s,filter .35s}
+.foot-social a:hover{transform:translateY(-4px) scale(1.06);box-shadow:0 12px 26px rgba(0,0,0,.4);filter:brightness(1.08)}
+.foot-social svg{width:24px;height:24px;stroke-width:1.9}
+.foot-social a[aria-label="Instagram"]{background:linear-gradient(45deg,#f09433 0%,#e6683c 28%,#dc2743 55%,#cc2366 75%,#bc1888 100%)}
+.foot-social a[aria-label="Facebook"]{background:#1877F2}
+.foot-social a[aria-label="Email"]{background:var(--gold);color:var(--navy)}
+.foot-social a[aria-label="LinkedIn"]{display:none}
+.foot-social::before{content:"FOLLOW US";font-size:11px;letter-spacing:.3em;font-weight:700;color:rgba(255,255,255,.7);margin-right:6px}
+@media(max-width:560px){.foot-social::before{display:none}}
 
 /* ---------- RESPONSIVE ---------- */
 @media(max-width:1100px){
