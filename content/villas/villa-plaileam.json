@@ -4,6 +4,11 @@
   "name": "Villa Plaileam ",
   "area": "Plaileam",
   "featured": true,
+  "gallery_photos": [
+    {
+      "image": "/assets/img/villas/photo-2026-10-15-09-51-48-1-.jpg"
+    }
+  ],
   "order": 99,
   "style": "Central Location. Easy Access. Private Pool",
   "sale_price": 11400000,
