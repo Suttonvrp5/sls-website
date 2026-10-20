@@ -53,6 +53,7 @@ collections:
         name: "gallery"
         widget: "image"
         multiple: true
+        allow_multiple: true
         required: false
         hint: "More photos for the picture slider on the villa's own page. Click to open the file picker and select several photos at once (hold Ctrl/Cmd to multi-select), or drag a whole batch in together — 10 to 12 is typical, but add as few or as many as you have. The cover photo above is always shown first."
       - label: "Floor Plans"
@@ -273,5 +274,7 @@ collections:
           - { label: "Telephone (technical)", name: "phone_href", widget: "string", hint: "Same number but digits only with country code, no spaces or brackets, e.g. +66770000000 — used behind the scenes for search engines, not shown directly." }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Formspree Form ID", name: "formspree_id", widget: "string", hint: "From https://formspree.io — this powers BOTH the Contact and Relocation forms. Create a free form there (destination: owners@samuiluxurystays.com), then paste just the ID here (the part after /f/ in the URL Formspree gives you, looks like: xyzabcde). Until this is a real ID, both forms show a thank-you message but don't actually send anywhere." }
+          - { label: "Legal Company Name", name: "legal_name", widget: "string", required: false, hint: "Exact registered name, e.g. Rooster Island Holdings Co., Ltd. Shown in the footer as '© 2026 [name], trading as Samui Luxury Stays'. Leave blank to show just Samui Luxury Stays." }
+          - { label: "Registration / Tax Details (optional)", name: "legal_details", widget: "string", required: false, hint: "One short line shown under the copyright, e.g. Reg. No. 0000000000 · Tax ID 0000000000. Leave blank to hide." }
           - { label: "Instagram URL", name: "instagram_url", widget: "string", required: false, hint: "Full link, e.g. https://instagram.com/samuiluxurystays — leave as # if you don't have one yet." }
-          - { label: "LinkedIn URL", name: "linkedin_url", widget: "string", required: false, hint: "Full link to your LinkedIn page — leave as # if you don't have one yet." }
+          - { label: "Facebook URL", name: "facebook_url", widget: "string", required: false, hint: "Full link to your Facebook Page, e.g. https://www.facebook.com/samuiluxurystays — leave blank until the page exists; the icon only appears once a link is entered." }
