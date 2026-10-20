@@ -437,3 +437,37 @@ footer{background:var(--navy-deep);color:#fff;padding:90px 0 36px}
 .vcard .vprice small{font-weight:300;font-size:.78rem;opacity:.7;margin-left:6px}
 .vcard .vchip{position:absolute;top:16px;right:16px;z-index:3;background:var(--gold);color:var(--navy);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:3px}
 .pfilters select:disabled{opacity:.4}
+
+.vfacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--hairline);border:1px solid var(--hairline);border-radius:6px;overflow:hidden;margin:6px 0 26px}
+.vfact{background:#fff;padding:16px 18px}
+.vfact span{display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:6px}
+.vfact b{font-size:1.05rem;font-weight:600;color:var(--navy)}
+.vsub{font-size:1.15rem;font-weight:600;color:var(--navy);margin:30px 0 14px}
+.vamen{list-style:none;padding:0;margin:0 0 6px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px 24px}
+.vamen li{display:flex;align-items:center;gap:12px;font-size:1rem;color:var(--ink,#1a2638);font-weight:500}
+.vamen svg{width:22px;height:22px;flex:none;padding:4px;border-radius:50%;background:var(--gold);color:var(--navy)}
+@media(max-width:600px){.vamen{grid-template-columns:1fr}}
+
+/* Property cards: clearer, more readable text */
+.vcard .vgrad{background:linear-gradient(180deg,rgba(8,23,41,0) 25%,rgba(8,23,41,.78) 62%,rgba(8,23,41,.96) 100%)}
+.vcard .vbody{padding:26px 28px}
+.vcard .vtag{display:inline-block;font-size:.8rem;letter-spacing:.14em;font-weight:700;color:#E3C487;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.vcard h3{font-size:1.7rem;font-weight:500;text-shadow:0 1px 6px rgba(0,0,0,.55)}
+.vcard .vmeta{font-size:1rem;font-weight:500;color:#fff;gap:8px 20px;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.vcard .vmeta span{display:inline-flex;align-items:center}
+.vcard .vmeta span+span::before{content:"";width:4px;height:4px;background:var(--gold);transform:rotate(45deg);margin-right:20px}
+.vcard .vpills span{font-size:.82rem;font-weight:600;color:#fff;background:rgba(8,23,41,.72);border:1px solid rgba(227,196,135,.7);padding:5px 12px}
+.vcard .vprice{font-size:1.2rem}
+
+/* Properties page: photo on top, solid info panel below (text never sits on the photo) */
+.portfolio .vcard{display:flex;flex-direction:column;min-height:0;background:#0d2440;border:1px solid rgba(255,255,255,.1);border-radius:8px}
+.portfolio .vcard .vimg{position:relative;inset:auto;height:250px;flex:none;transform:none;background-size:cover;background-position:center}
+.portfolio .vcard:hover .vimg{transform:none;filter:brightness(1.06)}
+.portfolio .vcard .vgrad{display:none}
+.portfolio .vcard .vbody{position:static;padding:22px 24px 24px;background:#0d2440;flex:1}
+.portfolio .vcard .vtag{color:#E3C487;font-size:.78rem;text-shadow:none}
+.portfolio .vcard h3{text-shadow:none;font-size:1.55rem;margin:8px 0 10px}
+.portfolio .vcard .vmeta{text-shadow:none;margin-bottom:4px}
+.portfolio .vcard .vprice{margin-top:12px;color:#E3C487}
+.portfolio .vcard .vpills{margin-top:14px}
+.portfolio .vcard .vpills span{background:rgba(255,255,255,.08);border-color:rgba(227,196,135,.55)}
