@@ -695,6 +695,10 @@ function build() {
   // and LinkedIn links stay consistent everywhere, including villa and
   // journal pages that don't otherwise go through the page-content system.
   const settings = loadJSON(SETTINGS_FILE);
+  // Default Facebook page (used unless a different address is entered in Site Settings)
+  if (settings && !/^https?:\/\//i.test(String(settings.facebook_url || '').trim())) {
+    settings.facebook_url = 'https://www.facebook.com/profile.php?id=61594774962704';
+  }
   function walkHtmlFiles(dir, fn) {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       const full = path.join(dir, entry.name);
@@ -716,6 +720,19 @@ function build() {
     // the saved email everywhere, and add the saved phone number to the footer too.
     if (settings && settings.email && String(settings.email).trim()) {
       html = html.split('owners@samuiluxurystays.com').join('{{CMS:email}}');
+    }
+    // LinkedIn icon removed from footer
+    html = html.replace(/\s*<a href="\{\{CMS:linkedin_url\}\}"[^>]*aria-label="LinkedIn">[\s\S]*?<\/a>/g, '');
+    // Legal company line in footer (from Site Settings)
+    if (settings && String(settings.legal_name || '').trim()) {
+      const legal = esc(String(settings.legal_name).trim());
+      const extra = String(settings.legal_details || '').trim();
+      html = html.replace(/<p>© <span id="year">(\d+)<\/span> Samui Luxury Stays\. All rights reserved\.<\/p>/,
+        `<p>© <span id="year">$1</span> ${legal}, trading as Samui Luxury Stays. All rights reserved.${extra ? '<br><span style="opacity:.75;font-size:.92em">' + esc(extra) + '</span>' : ''}</p>`);
+    }
+    if (settings && /^https?:\/\//i.test(String(settings.facebook_url || '').trim()) && !html.includes('aria-label="Facebook"')) {
+      html = html.replace(/(<a href="\{\{CMS:instagram_url\}\}"[^>]*aria-label="Instagram">[\s\S]*?<\/a>)/,
+        '$1<a href="{{CMS:facebook_url}}" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 8.5h2.5V5H14c-2 0-3.5 1.5-3.5 3.5V11H8v3.5h2.5V21H14v-6.5h2.5L17 11h-3V8.9c0-.3.2-.4.4-.4z"/></svg></a>');
     }
     if (settings && settings.phone_display && String(settings.phone_display).trim() && !html.includes('foot-phone')) {
       const telDigits = telHref(settings.phone_href || settings.phone_display);
