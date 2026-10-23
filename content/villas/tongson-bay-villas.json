@@ -1,0 +1,47 @@
+{
+  "ownership_structure": "Chanote Freehold",
+  "rent_price": 83000,
+  "property_type": "Villa",
+  "bathrooms": 3,
+  "sale_currency": "THB",
+  "name": "Tongson Bay Villas",
+  "area": "Plaileam",
+  "featured": true,
+  "gallery_photos": [
+    {
+      "image": "/assets/img/villas/chatgpt-image-oct-22-2026-10_10_25-pm.png"
+    },
+    {
+      "image": "/assets/img/villas/chatgpt-image-oct-22-2026-09_51_22-pm-1.png"
+    },
+    {
+      "image": "/assets/img/villas/chatgpt-image-oct-22-2026-09_51_23-pm-3.png"
+    },
+    {
+      "image": "/assets/img/villas/chatgpt-image-oct-22-2026-09_51_24-pm-4.png"
+    }
+  ],
+  "order": 99,
+  "size_sqm": 250,
+  "style": "Private Beach, 24 hour gated security, Communal Resort Style Pool",
+  "sale_price": 12000000,
+  "status": "Available",
+  "listing_type": [
+    "Rental",
+    "For Sale"
+  ],
+  "location": {
+    "lat": 9.581574,
+    "lng": 100.07255
+  },
+  "feature": "Central Location, 24 Hour Security, Private Beach",
+  "amenities": [
+    "Pool",
+    "Air Conditioning",
+    "Parking"
+  ],
+  "bedrooms": 4,
+  "tag": "New",
+  "image": "/assets/img/villas/chatgpt-image-oct-22-2026-10_10_25-pm.png",
+  "description": "Tongson Bay Villas – 4-Bedroom Villa\n\nTongson Bay Villas is a boutique resort-style development where warm, natural wood architecture meets clean modern design. This spacious 4-bedroom villa offers a large open-air living room and bedrooms that open onto the fresh sea breeze, with direct access to a private beach and communal swimming pool. Great for families and children. \n\nThe villa sits in a peaceful, sought-after spot, a short stroll from the quiet sands of Tongson Beach, where you can enjoy clear, calm water on a secluded stretch of private beach. Fisherman Village is 12 minutes and the airport is just 10 minutes by car, and a good selection of restaurants, shops and bars is close by. It’s an ideal base for families or groups who want tranquility without giving up convenience.\n\nVilla Details\n\nLocation: Plaileam, Bophut, Koh Samui, Surat Thani\nType: 2-storey private villa\nLiving area: 250 sqm\nBedrooms: 4\nBathrooms: 3\nLarge living room and separate dining area\nBedroom on main floor for people with mobility issues\nWestern-style kitchen\nSun terrace with private swimming pool\nPrivate car parking\n\nFacilities\n\nDirect beach access\nCommunal swimming pool\n24-hour security\nCar parking\nPrivate garden\nBBQ area\n\nTenancy \n\nMinimum 1 year lease\nTenant responsible for utilities and wifi\nDamage deposit 1 month rent\nPets upon approval with extra pet deposit "
+}
