@@ -9,6 +9,9 @@
   "featured": true,
   "gallery_photos": [
     {
+      "image": "/assets/img/villas/chatgpt-image-oct-22-2026-10_10_08-pm-3.png"
+    },
+    {
       "image": "/assets/img/villas/chatgpt-image-oct-22-2026-10_10_25-pm.png"
     },
     {
@@ -19,6 +22,9 @@
     },
     {
       "image": "/assets/img/villas/chatgpt-image-oct-22-2026-09_51_24-pm-4.png"
+    },
+    {
+      "image": "/assets/img/villas/chatgpt-image-oct-22-2026-09_56_05-pm-3.png"
     }
   ],
   "order": 99,
